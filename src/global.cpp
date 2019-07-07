@@ -9,4 +9,4 @@ pros::Motor bottom_right_mtr(6);
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::Controller partner(pros::E_CONTROLLER_PARTNER);
 
-std::map<std::string,pros::Motor> ALL_MOTORS {{"top_left", top_left_mtr}, {"top_right", top_right_mtr}, {"bottom_left", bottom_left_mtr}, {"bottom_right", bottom_right_mtr}};
+std::map<std::string,pros::Motor> ALL_MOTORS {{"top_left", top_left_mtr}, {"top_right", top_right_mtr}, {"down_left", bottom_left_mtr}, {"down_right", bottom_right_mtr}};

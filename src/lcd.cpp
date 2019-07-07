@@ -22,20 +22,20 @@ void updateTempWarning(){
   }
   if(tempStr!=motorName + std::string(" is at ") + std::to_string(maxTemp)){
     tempStr = motorName + std::string(" is at ") + std::to_string(maxTemp);
-    master.print(0, 0, "%s is at %d",motorName,maxTemp);
-    partner.print(0, 0, "%s is at %d",motorName,maxTemp);
+    pros::lcd::print(4, "%s",tempStr);
+    master.print(0, 0, "%s: %d      ",motorName,maxTemp);
+    partner.print(0, 0, "%s: %d      ",motorName,maxTemp);
   }
 }
 
 void updateControllerBattery(){
   //NOTE: FIX col
-  if(masterBattery!=master.get_battery_level()){
+  if(masterBattery!=master.get_battery_level()||partnerBattery!=partner.get_battery_level()){
     masterBattery=master.get_battery_level();
-    master.print(0, 15, "%d%",masterBattery);
-  }
-  if(partnerBattery!=partner.get_battery_level()){
     partnerBattery=partner.get_battery_level();
-    partner.print(1, 0, "%d%",partnerBattery);
+    pros::lcd::print(5, "M: %d, P:%d     ",masterBattery,partnerBattery);
+    partner.print(1, 0, "M: %d, P:%d     ",masterBattery,partnerBattery);
+    //master.print(0, 21, "%d",masterBattery);
   }
 
 }
