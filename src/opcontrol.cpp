@@ -16,14 +16,25 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
+ using namespace okapi;
+
+ int FRONT_LEFT = 1;
+int FRONT_RIGHT = -2;
+int BACK_LEFT = -6;
+int BACK_RIGHT = 8;
+auto myChassis = ChassisControllerFactory::create(
+	FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
+	AbstractMotor::gearset::green,
+	{4_in, 11_in}
+);
+
 void opcontrol() {
-	auto myChassis = okapi::ChassisControllerFactory::create(
-	  1, -2, -6, 8
-	);
+
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
 	//myChassis.turnAngle(100);
-	//myChassis.moveDistance(-3000);
+	myChassis.moveDistance(3000); 
 	int loopCount = 0;
 	while (true) {
 
