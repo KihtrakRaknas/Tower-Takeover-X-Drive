@@ -12,8 +12,8 @@ void updateTempWarning(){
     int temp = motor.second.get_temperature();
     if(temp>=55){
       //Motor will start to get throtled
-      master.rumble("- - - -");
-      partner.rumble("- - - -");
+      //master.rumble("- - - -");
+      //partner.rumble("- - - -");
     }
     if(temp>maxTemp){
       maxTemp=temp;

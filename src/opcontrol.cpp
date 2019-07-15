@@ -34,13 +34,23 @@ void opcontrol() {
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
 	//myChassis.turnAngle(100);
-	myChassis.moveDistance(3000); 
+	//myChassis.moveDistance(3000);
 	int loopCount = 0;
 	while (true) {
 
 		double gyroVal = gyro.get_value()/10;
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
+
+    cube_holder_mtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+      pros::lcd::print(3, "BTN ORES");
+      cube_holder_mtr.move_velocity(20);
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+      cube_holder_mtr.move_velocity(-20);
+    }else{
+      cube_holder_mtr.move_velocity(0);
+    }
 
 		pros::lcd::print(3, "Gyro: %f",gyroVal);
 

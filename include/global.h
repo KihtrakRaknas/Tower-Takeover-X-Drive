@@ -10,6 +10,7 @@ extern pros::Motor top_left_mtr;
 extern pros::Motor top_right_mtr;
 extern pros::Motor bottom_left_mtr;
 extern pros::Motor bottom_right_mtr;
+extern pros::Motor cube_holder_mtr;
 
 extern pros::Controller master;
 extern pros::Controller partner;

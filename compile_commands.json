@@ -28,11 +28,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/lcd.cpp.o",
-            "src\\lcd.cpp"
+            "bin/x-drive.cpp.o",
+            "src\\x-drive.cpp"
         ],
         "directory": "C:\\Users\\vijay\\Documents\\GitHub\\xdrive",
-        "file": "src\\lcd.cpp"
+        "file": "src\\x-drive.cpp"
     },
     {
         "arguments": [
@@ -63,11 +63,46 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/x-drive.cpp.o",
-            "src\\x-drive.cpp"
+            "bin/global.cpp.o",
+            "src\\global.cpp"
         ],
         "directory": "C:\\Users\\vijay\\Documents\\GitHub\\xdrive",
-        "file": "src\\x-drive.cpp"
+        "file": "src\\global.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-fno-ms-extensions",
+            "-fno-ms-compatibility",
+            "-fno-delayed-template-parsing",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/./",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "bin/lcd.cpp.o",
+            "src\\lcd.cpp"
+        ],
+        "directory": "C:\\Users\\vijay\\Documents\\GitHub\\xdrive",
+        "file": "src\\lcd.cpp"
     },
     {
         "arguments": [
