@@ -63,11 +63,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/global.cpp.o",
-            "src\\global.cpp"
+            "bin/lcd.cpp.o",
+            "src\\lcd.cpp"
         ],
         "directory": "C:\\Users\\vijay\\Documents\\GitHub\\xdrive",
-        "file": "src\\global.cpp"
+        "file": "src\\lcd.cpp"
     },
     {
         "arguments": [
@@ -98,11 +98,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/lcd.cpp.o",
-            "src\\lcd.cpp"
+            "bin/global.cpp.o",
+            "src\\global.cpp"
         ],
         "directory": "C:\\Users\\vijay\\Documents\\GitHub\\xdrive",
-        "file": "src\\lcd.cpp"
+        "file": "src\\global.cpp"
     },
     {
         "arguments": [

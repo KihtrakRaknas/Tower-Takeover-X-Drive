@@ -41,16 +41,24 @@ void opcontrol() {
 		double gyroVal = gyro.get_value()/10;
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
-
-    cube_holder_mtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-      pros::lcd::print(3, "BTN ORES");
-      cube_holder_mtr.move_velocity(20);
-    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      cube_holder_mtr.move_velocity(-20);
-    }else{
-      cube_holder_mtr.move_velocity(0);
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+      armRight.move_velocity(20);
+      armLeft.move_velocity(20);
     }
+    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+      armRight.move_velocity(-20);
+      armLeft.move_velocity(-20);
+    }
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+      ramp.move_velocity(-5);
+    }
+    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+      ramp.move_velocity(5);
+    }
+    rollerLeft.move_velocity(200);
+    rollerRight.move_velocity(-200);
+
+
 
 		pros::lcd::print(3, "Gyro: %f",gyroVal);
 
