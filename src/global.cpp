@@ -2,14 +2,14 @@
 #include "global.h"
 
 pros::Motor top_left_mtr(1);
-pros::Motor top_right_mtr(2);
-pros::Motor bottom_left_mtr(8);
-pros::Motor bottom_right_mtr(6);
-pros::Motor ramp(5);
-pros::Motor rollerLeft(3);
+pros::Motor top_right_mtr(19);
+pros::Motor bottom_left_mtr(5);
+pros::Motor bottom_right_mtr(7);
+pros::Motor ramp(9);
+pros::Motor rollerLeft(8);
 pros::Motor rollerRight(4);
-pros::Motor armLeft(9);
-pros::Motor armRight(10);
+pros::Motor armLeft(10);
+pros::Motor armRight(20);
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::Controller partner(pros::E_CONTROLLER_PARTNER);

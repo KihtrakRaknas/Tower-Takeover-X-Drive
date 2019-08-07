@@ -42,21 +42,38 @@ void opcontrol() {
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      armRight.move_velocity(20);
-      armLeft.move_velocity(20);
+      armRight.move_velocity(80);
+      armLeft.move_velocity(80);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      armRight.move_velocity(-20);
-      armLeft.move_velocity(-20);
+      armRight.move_velocity(-80);
+      armLeft.move_velocity(-80);
+    }
+    else{
+      armRight.move_velocity(0);
+      armLeft.move_velocity(0);
+    }
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+      rollerLeft.move_velocity(350);
+      rollerRight.move_velocity(-350);
+    }
+    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+      rollerLeft.move_velocity(-350);
+      rollerRight.move_velocity(350);
+    }
+    else{
+      rollerLeft.move_velocity(0);
+      rollerRight.move_velocity(0);
     }
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(-5);
+      ramp.move_velocity(-20);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-      ramp.move_velocity(5);
+      ramp.move_velocity(20);
     }
-    rollerLeft.move_velocity(200);
-    rollerRight.move_velocity(-200);
+    else{
+      ramp.move_velocity(0);
+    }
 
 
 
