@@ -1,5 +1,6 @@
 #include "main.h"
-
+#include "global.h"
+#include "lcd.h"
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -13,4 +14,10 @@
  */
 void autonomous() {
 //  moveDrive(,master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
+rollerLeft.move_velocity(350);
+rollerRight.move_velocity(-350);
+}
+
+void move(){
+
 }

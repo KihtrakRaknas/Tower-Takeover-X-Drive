@@ -58,8 +58,8 @@ void opcontrol() {
       rollerRight.move_velocity(-350);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      rollerLeft.move_velocity(-350);
-      rollerRight.move_velocity(350);
+      rollerLeft.move_velocity(-100);
+      rollerRight.move_velocity(100);
     }
     else{
       rollerLeft.move_velocity(0);
@@ -85,7 +85,7 @@ void opcontrol() {
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 	  //END DEFAULT
 
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
 			gyro.reset();
 		}
 

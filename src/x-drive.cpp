@@ -85,8 +85,8 @@ void moveDrive(double xPos, double yPos, double turn, double angle){
   */
 
   top_left_mtr.move_velocity(yPos+turn);
-  top_right_mtr.move_velocity(-1*xPos-turn);
+  top_right_mtr.move_velocity(xPos+turn);
   bottom_left_mtr.move_velocity(-1*xPos+turn);
-  bottom_right_mtr.move_velocity(yPos-turn);
+  bottom_right_mtr.move_velocity(-yPos+turn);
 
 }
