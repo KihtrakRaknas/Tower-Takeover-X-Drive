@@ -54,8 +54,8 @@ void opcontrol() {
       armLeft.move_velocity(0);
     }
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-      rollerLeft.move_velocity(350);
-      rollerRight.move_velocity(-350);
+      rollerLeft.move_velocity(500);
+      rollerRight.move_velocity(-500);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       rollerLeft.move_velocity(-100);
