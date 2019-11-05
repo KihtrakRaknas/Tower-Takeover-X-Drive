@@ -26,26 +26,28 @@ void autonomous() {
   bottom_right_mtr.move_relative(900,50);
   pros::delay(2200);
   //Red
-  top_left_mtr.move_relative(1200,60);
+  /*top_left_mtr.move_relative(1200,60);
   top_right_mtr.move_relative(1200,60);
   bottom_left_mtr.move_relative(1200,60);
-  bottom_right_mtr.move_relative(1200,60);
+  bottom_right_mtr.move_relative(1200,60);*/
 
   //Blue
-  /*top_left_mtr.move_relative(-1250,60);
+  top_left_mtr.move_relative(-1250,60);
   top_right_mtr.move_relative(-1250,60);
   bottom_left_mtr.move_relative(-1250,60);
-  bottom_right_mtr.move_relative(-1250,60);*/
+  bottom_right_mtr.move_relative(-1250,60);
   pros::delay(1800);
   top_left_mtr.move_relative(720,50);
   top_right_mtr.move_relative(-720,50);
   bottom_left_mtr.move_relative(720,50);
   bottom_right_mtr.move_relative(-720,50);
   pros::delay(1800);
-  rollerLeft.move_velocity(0);
-  rollerRight.move_velocity(0);
-  ramp.move_relative(-980,17);
-  pros::delay(3300);
+  //rollerLeft.move_velocity(0);
+  //rollerRight.move_velocity(0);
+  rollerLeft_mtr.move_relative(-100,50);
+  rollerRight_mtr.move_relative(100,50);
+  ramp.move_relative(-1000,20);
+  pros::delay(3400);
   rollerLeft.move_velocity(-100);
   rollerRight.move_velocity(100);
   pros::delay(250);
