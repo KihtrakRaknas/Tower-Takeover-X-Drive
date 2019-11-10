@@ -42,12 +42,12 @@ void opcontrol() {
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      armRight.move_velocity(80);
-      armLeft.move_velocity(-80);
+      armRight.move_velocity(-500);
+      armLeft.move_velocity(500);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      armRight.move_velocity(-80);
-      armLeft.move_velocity(80);
+      armRight.move_velocity(500);
+      armLeft.move_velocity(-500);
     }
     else{
       armRight.move_velocity(0);
