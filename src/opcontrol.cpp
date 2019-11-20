@@ -42,30 +42,34 @@ void opcontrol() {
 		double gyroVal = gyro.get_value()/10;
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
-    if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_R2)){
+    if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       armRight.move_velocity(-200);
     }
-    else if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_R1)){
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       armRight.move_velocity(200);
     }
 
-    if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_L2)){
+    if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       armLeft.move_velocity(-175);
     }
-    else if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_L1)){
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       armLeft.move_velocity(175);
     }
 
+    armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armRight.move_absolute(pos, 100);
-    armLeft.move_absolute(-pos, 100)
+    armLeft.move_absolute(-pos, 100);
+
+    pros::lcd::print(3, "pos: %f",pos);
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      if(pos<10000)
-        pos++
+      if(pos<20000)
+        pos+=10;
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       if(pos>0)
-        pos--;
+        pos-=10;
     }
     else{
       armRight.move_velocity(0);
@@ -95,8 +99,6 @@ void opcontrol() {
     }
 
 
-
-		pros::lcd::print(3, "Gyro: %f",gyroVal);
 
 		//default code
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
