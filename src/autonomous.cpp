@@ -25,18 +25,21 @@ void autonomous() {
   bottom_left_mtr.move_relative(-900,50);
   bottom_right_mtr.move_relative(900,50);
   pros::delay(2200);
+
   //Red
-  /*top_left_mtr.move_relative(1200,60);
+  top_left_mtr.move_relative(1200,60);
   top_right_mtr.move_relative(1200,60);
   bottom_left_mtr.move_relative(1200,60);
-  bottom_right_mtr.move_relative(1200,60);*/
+  bottom_right_mtr.move_relative(1200,60);
+  pros::delay(1800);
 
   //Blue
-  top_left_mtr.move_relative(-1250,60);
+  /*top_left_mtr.move_relative(-1250,60);
   top_right_mtr.move_relative(-1250,60);
   bottom_left_mtr.move_relative(-1250,60);
   bottom_right_mtr.move_relative(-1250,60);
-  pros::delay(1800);
+  pros::delay(1800);*/
+
   top_left_mtr.move_relative(720,50);
   top_right_mtr.move_relative(-720,50);
   bottom_left_mtr.move_relative(720,50);
@@ -46,6 +49,7 @@ void autonomous() {
   //rollerRight.move_velocity(0);
   rollerLeft_mtr.move_relative(-100,50);
   rollerRight_mtr.move_relative(100,50);
+  pros::delay(800);
   ramp.move_relative(-1000,20);
   pros::delay(3400);
   rollerLeft.move_velocity(-100);
@@ -62,4 +66,11 @@ void move(double d, double v){
   top_right_mtr.move_relative(-d,v);
   bottom_left_mtr.move_relative(d,v);
   bottom_right_mtr.move_relative(-d,v);
+}
+void intake(double speed){
+  rollerLeft.move_velocity(speed);
+  rollerRight.move_velocity(-speed);
+}
+void stack(){
+
 }
