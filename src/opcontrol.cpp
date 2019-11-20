@@ -36,6 +36,7 @@ void opcontrol() {
 	//myChassis.turnAngle(100);
 	//myChassis.moveDistance(3000);
 	int loopCount = 0;
+  double pos = 0;
 	while (true) {
 
 		double gyroVal = gyro.get_value()/10;
@@ -47,24 +48,30 @@ void opcontrol() {
     else if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_R1)){
       armRight.move_velocity(200);
     }
+
     if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_L2)){
       armLeft.move_velocity(-175);
     }
     else if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_L1)){
       armLeft.move_velocity(175);
     }
+
+    armRight.move_absolute(pos, 100);
+    armLeft.move_absolute(-pos, 100)
+
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      armRight.move_velocity(-200);
-      armLeft.move_velocity(175);
+      if(pos<10000)
+        pos++
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      armRight.move_velocity(200);
-      armLeft.move_velocity(-175);
+      if(pos>0)
+        pos--;
     }
     else{
       armRight.move_velocity(0);
       armLeft.move_velocity(0);
     }
+
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(650);
       rollerRight.move_velocity(-650);
