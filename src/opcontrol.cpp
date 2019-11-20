@@ -41,13 +41,25 @@ void opcontrol() {
 		double gyroVal = gyro.get_value()/10;
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
+    if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_R2)){
+      armRight.move_velocity(-200);
+    }
+    else if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_R1)){
+      armRight.move_velocity(200);
+    }
+    if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_L2)){
+      armLeft.move_velocity(-175);
+    }
+    else if(partner.get_digital(pros:E_CONTROLLER_DIGITAL_L1)){
+      armLeft.move_velocity(175);
+    }
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      armRight.move_velocity(-500);
-      armLeft.move_velocity(500);
+      armRight.move_velocity(-200);
+      armLeft.move_velocity(175);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      armRight.move_velocity(500);
-      armLeft.move_velocity(-500);
+      armRight.move_velocity(200);
+      armLeft.move_velocity(-175);
     }
     else{
       armRight.move_velocity(0);
