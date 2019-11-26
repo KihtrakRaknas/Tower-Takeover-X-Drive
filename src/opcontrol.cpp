@@ -64,16 +64,12 @@ void opcontrol() {
     pros::lcd::print(3, "pos: %f",pos);
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      if(pos<20000)
-        pos+=10;
+      //if(pos<5500)
+        pos+=100;
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      if(pos>0)
-        pos-=10;
-    }
-    else{
-      armRight.move_velocity(0);
-      armLeft.move_velocity(0);
+      //if(pos>0)
+        pos-=100;
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
