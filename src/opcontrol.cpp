@@ -2,6 +2,7 @@
 #include "x-drive.h"
 #include "global.h"
 #include "lcd.h"
+#include "autonomous.h"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -37,12 +38,13 @@ void opcontrol() {
 	//myChassis.moveDistance(3000);
 	int loopCount = 0;
   double pos = 0;
+  int liftSpeed = 200;
 	while (true) {
 
 		double gyroVal = gyro.get_value()/10;
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
-    if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+    /*if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       armRight.move_velocity(-200);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
@@ -54,11 +56,11 @@ void opcontrol() {
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       armLeft.move_velocity(175);
-    }
+    }*/
 
     armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    armRight.move_absolute(pos, 100);
+    armRight.move_absolute(pos, 100);//0.1*abs(armRight.get_position()-pos)
     armLeft.move_absolute(-pos, 100);
 
     pros::lcd::print(3, "pos: %f",pos);
@@ -66,10 +68,23 @@ void opcontrol() {
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
         pos+=100;
+        liftSpeed=200;
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       //if(pos>0)
         pos-=100;
+        liftSpeed=100;
+    }
+
+    if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+      //if(pos<5500)
+        pos+=100;
+        liftSpeed=200;
+    }
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+      //if(pos>0)
+        pos-=100;
+        liftSpeed=100;
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
@@ -80,18 +95,36 @@ void opcontrol() {
       rollerLeft.move_velocity(-100);
       rollerRight.move_velocity(100);
     }
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+      rollerLeft.move_velocity(650);
+      rollerRight.move_velocity(-650);
+    }
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+      rollerLeft.move_velocity(-100);
+      rollerRight.move_velocity(100);
+    }
     else{
       rollerLeft.move_velocity(0);
       rollerRight.move_velocity(0);
     }
+
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(-25);
+      ramp.move_velocity(-40);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-      ramp.move_velocity(50);
+      ramp.move_velocity(100);
     }
-    else{
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+      ramp.move_velocity(-100);
+    }
+    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+      ramp.move_velocity(100);
+    }else {
       ramp.move_velocity(0);
+    }
+
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+      autonomous();
     }
 
 
