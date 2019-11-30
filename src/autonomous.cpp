@@ -12,7 +12,15 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
- void lift(double d);
+ void lift(double d, double v);
+ void move(double d, double v);
+ void turnRight(double d, double v);
+ void stack();
+ void delay(double d);
+ void intake(double v);
+
+ double tileDistance = 400;
+ double turn90 = 190;
 
  using namespace okapi;
 
@@ -37,79 +45,125 @@ void autonomous() {
   	Motor(FRONT_LEFT), Motor(FRONT_RIGHT), Motor(BACK_LEFT), Motor(BACK_RIGHT)
   );
 
-  //chassis.moveDistance(1000);
-  chassis.moveDistance(10000);
-  lift(2500);
+  //chassis.moveDistance(10000);
+  /*lift(3000);
+  pros::delay(2000);
+  lift(-1000);*/
 
-  pros::delay(10000);
-
-  //lift(-1000);
-
-  pros::delay(1000);
-
-  rollerLeft.move_velocity(350);
-  rollerRight.move_velocity(-350);
-  top_left_mtr.move_relative(1200,30);
-  top_right_mtr.move_relative(-1200,30);
-  bottom_left_mtr.move_relative(1200,30);
-  bottom_right_mtr.move_relative(-1200,30);
-  pros::delay(3500);
-  top_left_mtr.move_relative(-900,50);
-  top_right_mtr.move_relative(900,50);
-  bottom_left_mtr.move_relative(-900,50);
-  bottom_right_mtr.move_relative(900,50);
+  /*lift(-1000);
+  pros::delay(1000);*/
+  intake(0);
+  lift(5000,20);
   pros::delay(2200);
+  pros::delay(15000);
+
+  intake(650);
+  move(200,12);
+  delay(5000);
+  move(-50,20);
+  delay(2000);
+  move(400,10);
+  delay(4500);
+  move(-300,30);
+  rollerLeft.move_velocity(0);
+  lift(5000,20);
+  delay(2500);
 
   //Red
-  top_left_mtr.move_relative(1200,60);
-  top_right_mtr.move_relative(1200,60);
-  bottom_left_mtr.move_relative(1200,60);
-  bottom_right_mtr.move_relative(1200,60);
-  pros::delay(1800);
+  turnRight(280,30);
+  delay(4000);
 
   //Blue
-  /*top_left_mtr.move_relative(-1250,60);
-  top_right_mtr.move_relative(-1250,60);
-  bottom_left_mtr.move_relative(-1250,60);
-  bottom_right_mtr.move_relative(-1250,60);
-  pros::delay(1800);*/
+  /*turnRight(-280,30);
+  pros::delay(3000);*/
+  intake(0);
+  move(100,20);
+  delay(2000);
+  stack();
+  ramp.move_velocity(50);
+  move(50,10);
+  delay(100);
+  move(-200,30);
+  delay(2000);
 
-  top_left_mtr.move_relative(720,50);
-  top_right_mtr.move_relative(-720,50);
-  bottom_left_mtr.move_relative(720,50);
-  bottom_right_mtr.move_relative(-720,50);
-  pros::delay(1800);
-  //rollerLeft.move_velocity(0);
-  //rollerRight.move_velocity(0);
-  lift(5000);
-  rollerLeft.move_relative(-100,50);
-  rollerRight.move_relative(100,50);
-  pros::delay(800);
-  ramp.move_relative(-1000,20);
-  pros::delay(3400);
-  rollerLeft.move_velocity(-100);
-  rollerRight.move_velocity(100);
-  pros::delay(250);
-  top_left_mtr.move_relative(-1400,50);
-  top_right_mtr.move_relative(1400,50);
-  bottom_left_mtr.move_relative(-1400,50);
-  bottom_right_mtr.move_relative(1400,50);
+  /*//RedClose
+  intake(650);
+  move(tileDistance*.5,20);
+  delay(3000);
+  turnRight(-turn90);
+  delay(3000,25);
+  move(tileDistance,20);
+  delay(3000);
+  turnRight(-turn90*1.5,20);
+  delay(3000);intake(0);
+  move(100,20);
+  delay(2000);
+  stack();
+  ramp.move_velocity(50);
+  move(50,10);
+  delay(100);
+  move(-200,30);
+  delay(2000);
+  */
+
+  /*//BlueClose
+  intake(650);
+  move(tileDistance*.5,20);
+  delay(3000);
+  turnRight(turn90);
+  delay(3000,25);
+  move(tileDistance,20);
+  delay(3000);
+  turnRight(turn90*1.5,20);
+  delay(3000);intake(0);
+  move(100,20);
+  delay(2000);
+  stack();
+  ramp.move_velocity(50);
+  move(50,10);
+  delay(100);
+  move(-200,30);
+  delay(2000);
+  */
+
+  /*//Backup
+  lift(5000,30);
+  delay(6000);
+  ramp.move_velocity(100);
+  delay(2000);
+  ramp.move_velocity(0);
+  move(-200,20);
+  delay(3000);
+  */
 }
 
+void delay(double d){
+  pros::delay(d);
+}
 void move(double d, double v){
-  top_left_mtr.move_relative(d,v);
-  top_right_mtr.move_relative(-d,v);
-  bottom_left_mtr.move_relative(d,v);
-  bottom_right_mtr.move_relative(-d,v);
+    top_left_mtr.move_relative(d,v);
+    top_right_mtr.move_relative(d,v);
+    bottom_left_mtr.move_relative(-d,v);
+    bottom_right_mtr.move_relative(-d,v);
 }
-void intake(double speed){
-  rollerLeft.move_velocity(speed);
-  rollerRight.move_velocity(-speed);
+void intake(double v){
+  rollerLeft.move_velocity(v);
 }
 void stack(){
-
+  ramp.move_velocity(100);
+  pros::delay(500);
+  move(100,25);
+  delay(5000);
+  ramp.move_velocity(0);
 }
-void lift(double d){
-  armRight.move_absolute(d, 100);
-  armLeft.move_absolute(-d, 100);
+void lift(double d, double v){
+  armRight.move_absolute(d, v);
+  armLeft.move_absolute(-d, v);
+}
+
+void turnRight(double d, double v){
+  top_left_mtr.move_relative(d,v);
+  top_right_mtr.move_relative(-d,v);
+  bottom_left_mtr.move_relative(-d,v);
+  bottom_right_mtr.move_relative(d,v);
 }

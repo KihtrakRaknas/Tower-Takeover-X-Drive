@@ -57,12 +57,12 @@ void opcontrol() {
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
         pos+=100;
-        liftSpeed=200;
+        liftSpeed=230;//200
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       //if(pos>0)
         pos-=100;
-        liftSpeed=100;
+        liftSpeed=230;
     }
 
     if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
@@ -81,8 +81,8 @@ void opcontrol() {
       rollerRight.move_velocity(-650);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      rollerLeft.move_velocity(-100);
-      rollerRight.move_velocity(100);
+      rollerLeft.move_velocity(-300);
+      rollerRight.move_velocity(300);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(650);
