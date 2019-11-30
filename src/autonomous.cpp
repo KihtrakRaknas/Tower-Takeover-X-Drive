@@ -12,7 +12,9 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+ void lift(double d);
 void autonomous() {
+
   rollerLeft.move_velocity(350);
   rollerRight.move_velocity(-350);
   top_left_mtr.move_relative(1200,30);
@@ -47,8 +49,9 @@ void autonomous() {
   pros::delay(1800);
   //rollerLeft.move_velocity(0);
   //rollerRight.move_velocity(0);
-  rollerLeft_mtr.move_relative(-100,50);
-  rollerRight_mtr.move_relative(100,50);
+  lift(5000);
+  rollerLeft.move_relative(-100,50);
+  rollerRight.move_relative(100,50);
   pros::delay(800);
   ramp.move_relative(-1000,20);
   pros::delay(3400);
@@ -73,4 +76,8 @@ void intake(double speed){
 }
 void stack(){
 
+}
+void lift(double d){
+  armRight.move_absolute(d, 100);
+  armLeft.move_absolute(-d, 100);
 }

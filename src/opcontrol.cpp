@@ -63,7 +63,7 @@ void opcontrol() {
     armRight.move_absolute(pos, 100);//0.1*abs(armRight.get_position()-pos)
     armLeft.move_absolute(-pos, 100);
 
-    pros::lcd::print(3, "pos: %f",pos);
+    //pros::lcd::print(3, "pos: %f",pos);
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
@@ -130,9 +130,9 @@ void opcontrol() {
 
 
 		//default code
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
+		/*pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
 		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);*/
 	  //END DEFAULT
 
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {

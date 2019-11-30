@@ -21,7 +21,7 @@ void initialize() {
 	pros::ADIGyro gyro (GYRO_PORT);
 	//pros::delay(5000);
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "Hello PROS User!!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 
