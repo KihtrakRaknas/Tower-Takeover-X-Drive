@@ -13,7 +13,39 @@
  * from where it left off.
  */
  void lift(double d);
+
+ using namespace okapi;
+
 void autonomous() {
+  pros::lcd::print(3, "AUTON 2START");
+  pros::lcd::print(4, "AUTON START");
+  pros::lcd::print(5, "AUTON START");
+
+  armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+  /*top_left_mtr.move_relative(500,30);
+  top_right_mtr.move_relative(-500,30);
+  bottom_left_mtr.move_relative(500,30);
+  bottom_right_mtr.move_relative(-500,30);*/
+  int FRONT_LEFT = 1;
+ int FRONT_RIGHT = -19;
+ int BACK_LEFT = -5;
+ int BACK_RIGHT = 7;
+
+  auto chassis  = ChassisControllerFactory::create(
+  	Motor(FRONT_LEFT), Motor(FRONT_RIGHT), Motor(BACK_LEFT), Motor(BACK_RIGHT)
+  );
+
+  //chassis.moveDistance(1000);
+  chassis.moveDistance(10000);
+  lift(2500);
+
+  pros::delay(10000);
+
+  //lift(-1000);
+
+  pros::delay(1000);
 
   rollerLeft.move_velocity(350);
   rollerRight.move_velocity(-350);

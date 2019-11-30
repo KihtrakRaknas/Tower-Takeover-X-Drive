@@ -18,17 +18,6 @@
  * task, not resume it from where it left off.
  */
 
- using namespace okapi;
-
- int FRONT_LEFT = 1;
-int FRONT_RIGHT = -2;
-int BACK_LEFT = -6;
-int BACK_RIGHT = 8;
-auto myChassis = ChassisControllerFactory::create(
-	FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
-	AbstractMotor::gearset::green,
-	{4_in, 11_in}
-);
 
 void opcontrol() {
 
