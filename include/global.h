@@ -16,6 +16,9 @@ extern pros::Motor rollerRight;
 extern pros::Motor armLeft;
 extern pros::Motor armRight;
 
+extern pros::ADIPotentiometer potRight;
+extern pros::ADIPotentiometer potLeft;
+
 
 extern pros::Controller master;
 extern pros::Controller partner;

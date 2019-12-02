@@ -52,18 +52,32 @@ void opcontrol() {
     armRight.move_absolute(pos, 100);//0.1*abs(armRight.get_position()-pos)
     armLeft.move_absolute(-pos, 100);
 
+		pros::lcd::print(2, "L: %d; R: %d", potLeft.get_value(), potRight.get_value());
+
     //pros::lcd::print(3, "pos: %f",pos);
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
         pos+=100;
-        liftSpeed=230;//200
+        liftSpeed=260;//200
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       //if(pos>0)
         pos-=100;
-        liftSpeed=230;
+        liftSpeed=280;
     }
+
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+			//if(pos<5500)
+				pos+=500;
+				liftSpeed=260;//200
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+			//if(pos>0)
+				pos-=500;
+				liftSpeed=280;
+		}
+
 
     if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
@@ -98,13 +112,16 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(-40);
+      ramp.move_velocity(-60);
     }
-    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-      ramp.move_velocity(100);
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+			ramp.move_velocity(-100);
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+      ramp.move_velocity(140);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(-100);
+      ramp.move_velocity(-200);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
       ramp.move_velocity(100);

@@ -33,8 +33,9 @@ void updateControllerBattery(){
   if(masterBattery!=master.get_battery_level()||partnerBattery!=partner.get_battery_level()){
     masterBattery=master.get_battery_level();
     partnerBattery=partner.get_battery_level();
-    pros::lcd::print(5, "M: %d, P:%d     ",masterBattery,partnerBattery);
-    partner.print(1, 0, "M: %d, P:%d     ",masterBattery,partnerBattery);
+    pros::lcd::print(5, "M: %d, P:%d",masterBattery,partnerBattery);
+    partner.print(1, 0, "R: %d, L:%d",potRight.get_value(),potLeft.get_value());
+    //partner.print(1, 0, "M: %d, P:%d     ",masterBattery,partnerBattery);
     //master.print(0, 21, "%d",masterBattery);
   }
 
