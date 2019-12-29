@@ -49,8 +49,7 @@ void opcontrol() {
 
     armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    armRight.move_absolute(pos, 100);//0.1*abs(armRight.get_position()-pos)
-    armLeft.move_absolute(-pos, 100);
+    //0.1*abs(armRight.get_position()-pos)
 
 		pros::lcd::print(2, "L: %d; R: %d", potLeft.get_value(), potRight.get_value());
 
@@ -58,24 +57,18 @@ void opcontrol() {
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
-        pos+=100;
-        liftSpeed=260;//200
+        armRight.move_velocity(100);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       //if(pos>0)
-        pos-=100;
-        liftSpeed=280;
-    }
-
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
-			//if(pos<5500)
-				pos+=500;
-				liftSpeed=260;//200
+        armRight.move_velocity(-100);
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+			armRight.move_velocity(30);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-			//if(pos>0)
-				pos-=500;
-				liftSpeed=280;
+			armRight.move_velocity(-30);
+		}else{
+			armRight.move_velocity(0);
 		}
 
 
@@ -85,7 +78,7 @@ void opcontrol() {
         liftSpeed=200;
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      //if(pos>0)
+      //if(pos>0
         pos-=100;
         liftSpeed=100;
     }
@@ -121,10 +114,10 @@ void opcontrol() {
       ramp.move_velocity(140);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(-200);
+      ramp.move_velocity(200);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-      ramp.move_velocity(100);
+      ramp.move_velocity(-100);
     }else {
       ramp.move_velocity(0);
     }
