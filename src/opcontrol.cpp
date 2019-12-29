@@ -88,8 +88,8 @@ void opcontrol() {
       rollerRight.move_velocity(-300);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      rollerLeft.move_velocity(-100);
-      rollerRight.move_velocity(100);
+      rollerLeft.move_velocity(-80);
+      rollerRight.move_velocity(80);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
@@ -105,13 +105,13 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(-60);
+      ramp.move_velocity(70);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			ramp.move_velocity(-100);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-      ramp.move_velocity(140);
+      ramp.move_velocity(-150);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
       ramp.move_velocity(200);
