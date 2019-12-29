@@ -91,16 +91,16 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-      rollerLeft.move_velocity(650);
-      rollerRight.move_velocity(-650);
+      rollerLeft.move_velocity(300);
+      rollerRight.move_velocity(-300);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      rollerLeft.move_velocity(-300);
-      rollerRight.move_velocity(300);
+      rollerLeft.move_velocity(-100);
+      rollerRight.move_velocity(100);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-      rollerLeft.move_velocity(650);
-      rollerRight.move_velocity(-650);
+      rollerLeft.move_velocity(300);
+      rollerRight.move_velocity(-300);
     }
     else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       rollerLeft.move_velocity(-100);

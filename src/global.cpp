@@ -7,8 +7,8 @@ pros::Motor top_right_mtr(19);
 pros::Motor bottom_left_mtr(5);
 pros::Motor bottom_right_mtr(7);
 pros::Motor ramp(9);
-pros::Motor rollerLeft(8);
-pros::Motor rollerRight(4);
+pros::Motor rollerLeft(4);
+pros::Motor rollerRight(8);
 pros::Motor armLeft(10);
 pros::Motor armRight(20);
 
