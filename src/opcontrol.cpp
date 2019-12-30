@@ -86,26 +86,25 @@ void opcontrol() {
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
-    }
-    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       rollerLeft.move_velocity(-80);
       rollerRight.move_velocity(80);
-    }
-    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+      rollerLeft.move_velocity(-1000);
+      rollerRight.move_velocity(1000);
+    }else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
-    }
-    else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    }else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       rollerLeft.move_velocity(-100);
       rollerRight.move_velocity(100);
-    }
-    else{
+    }else{
       rollerLeft.move_velocity(0);
       rollerRight.move_velocity(0);
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(70);
+      ramp.move_velocity(35);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			ramp.move_velocity(-100);
@@ -122,9 +121,9 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+    /*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
       autonomous();
-    }
+    }*/
 
 
 
