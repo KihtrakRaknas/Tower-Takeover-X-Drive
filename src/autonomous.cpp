@@ -39,13 +39,28 @@ void autonomous() {
  int FRONT_RIGHT = 19;
  int BACK_LEFT = 5;
  int BACK_RIGHT = 7;
- int auton = 1;
+ int auton = 5;
 
-  auto chassis  = ChassisControllerFactory::create(
-  	Motor(FRONT_LEFT), Motor(FRONT_RIGHT), Motor(BACK_LEFT), Motor(BACK_RIGHT)
+  auto myChassis = ChassisControllerFactory::create(
+                                                   Motor(FRONT_LEFT), Motor(FRONT_RIGHT), Motor(BACK_LEFT), Motor(BACK_RIGHT),
+                                                   AbstractMotor::gearset::green,
+                                                   {4_in, 12.5_in}
+                                                   );
+auto profileController = AsyncControllerFactory::motionProfile(
+                                                                0.5,  // Maximum linear velocity of the Chassis in m/s
+                                                                1.0,  // Maximum linear acceleration of the Chassis in m/s/s
+                                                                10.0, // Maximum linear jerk of the Chassis in m/s/s/s
+                                                                myChassis // Chassis Controller
+                                                                );
+if(auton==5){
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{3_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+    "A" // Profile name
   );
-
-  if(auton==0){//Big Red
+  profileController.setTarget("A");
+  profileController.waitUntilSettled();
+}else if(auton==0){//Big Red
 moveDist(0.5,5);
 //liftPot(240,3090);
 //liftPot(220,3100);
