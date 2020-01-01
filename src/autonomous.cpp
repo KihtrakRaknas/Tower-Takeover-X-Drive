@@ -16,9 +16,11 @@ void moveDistSide(double dist, double v);
  void lift(double d, double v);
  void move(double d, double v);
  void turnRight(double d, double v);
+ void turnRightNonAsync(double d, double v);
  void stack();
  void delay(double d);
  void intake(double v);
+ void intake(double d, double v);
  void liftPot(int leftVal, int rightVal);
  void moveDist(double dist, double v);
  double tileDistance = 400;
@@ -41,25 +43,71 @@ void autonomous() {
  int BACK_RIGHT = 7;
  int auton = 5;
 
-  auto myChassis = ChassisControllerFactory::create(
-                                                   Motor(FRONT_LEFT), Motor(FRONT_RIGHT), Motor(BACK_LEFT), Motor(BACK_RIGHT),
-                                                   AbstractMotor::gearset::green,
-                                                   {4_in, 12.5_in}
-                                                   );
+auto chassis = ChassisControllerFactory::create(
+    FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
+    AbstractMotor::gearset::green,
+    {6.0_in, 20_in}
+);
 auto profileController = AsyncControllerFactory::motionProfile(
-                                                                0.5,  // Maximum linear velocity of the Chassis in m/s
-                                                                1.0,  // Maximum linear acceleration of the Chassis in m/s/s
-                                                                10.0, // Maximum linear jerk of the Chassis in m/s/s/s
-                                                                myChassis // Chassis Controller
-                                                                );
+    0.5,  // Maximum linear velocity of the Chassis in m/s
+    1.0,  // Maximum linear acceleration of the Chassis in m/s/s
+    10.0, // Maximum linear jerk of the Chassis in m/s/s/s
+    chassis // Chassis Controller
+);
+profileController.generatePath({
+  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+  Point{3.8_ft, 0_ft, 0_deg}},
+  "Blue Small First" // Profile name
+);
+profileController.generatePath({
+  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+  Point{2.3_ft, 0_ft, 0_deg}},
+  "Blue Small First Second" // Profile name
+);
+profileController.generatePath({
+  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+  Point{1.58_ft, 0_ft, 0_deg}},
+  "Blue Small Second" // Profile name
+);
+profileController.generatePath({
+  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+  Point{1_ft, 0_ft, 0_deg}},
+  "Blue Small Third" // Profile name
+);
+
 if(auton==5){
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{3_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
-    "A" // Profile name
-  );
-  profileController.setTarget("A");
+  lift(200, 50);
+  intake(200);
+  profileController.setTarget("Blue Small First");
   profileController.waitUntilSettled();
+  delay(100);
+  ChassisControllerFactory::create(
+       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+  profileController.setTarget("Blue Small First Second");
+  profileController.waitUntilSettled();
+  ChassisControllerFactory::create(
+      FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
+      AbstractMotor::gearset::green,
+      {6.0_in, 20_in}
+  );
+  turnRightNonAsync(-340*2+213,40);
+  profileController.setTarget("Blue Small Second");
+  profileController.waitUntilSettled();
+  intake(-1200,200);
+  delay(500);
+  stack();
+  intake(-100);
+  ChassisControllerFactory::create(
+       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+   );
+  profileController.setTarget("Blue Small Third");
+  profileController.waitUntilSettled();
+  intake(0);
 }else if(auton==0){//Big Red
 moveDist(0.5,5);
 //liftPot(240,3090);
@@ -241,6 +289,12 @@ else if(auton==1){//BlueBig
     ramp.move_velocity(0);
     move(-50,20);
   }
+
+  ChassisControllerFactory::create(
+      FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
+      AbstractMotor::gearset::green,
+      {6.0_in, 20_in}
+  );
 }
 
 void delay(double d){
@@ -269,15 +323,37 @@ void moveDistSide(double dist, double v){ //to right
 void moveDistControl(double dist, double v){
   double target_tick = (90.0 / PI) * dist;
 }
+
+
+#define THRESH 10
+void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,int bottomRightTarget){
+  while(abs(top_left_mtr.get_position()-topLeftTarget)>THRESH && abs(top_right_mtr.get_position()-topRightTarget)>THRESH && abs(bottom_left_mtr.get_position()-bottomLeftTarget)>THRESH && abs(bottom_right_mtr.get_position()-bottomRightTarget)>THRESH ){
+    pros::delay(20);
+  }
+  return;
+}
+
+void waitUntilTarget(pros::Motor motor, int target){
+  while(abs(motor.get_position()-target)>THRESH){
+    pros::delay(20);
+  }
+  return;
+}
+
+
 void intake(double v){
   rollerLeft.move_velocity(v);
+  rollerRight.move_velocity(-v);
+}
+void intake(double d,double v){
+  rollerLeft.move_relative(d,v);
+  rollerRight.move_relative(-d,-v);
 }
 void stack(){
-  ramp.move_velocity(100);
-  pros::delay(500);
-  move(100,25);
-  delay(5000);
-  ramp.move_velocity(0);
+  int initialPos = ramp.get_position();
+  ramp.move_relative(2400,100);
+  waitUntilTarget(ramp, 2400+initialPos);
+  ramp.move_relative(-1500,100);
 }
 
 void lift(double d, double v){
@@ -287,10 +363,16 @@ void lift(double d, double v){
 
 void turnRight(double d, double v){
   top_left_mtr.move_relative(d,v);
-  top_right_mtr.move_relative(-d*-1,v);
-  bottom_left_mtr.move_relative(-d*-1,v);
-  bottom_right_mtr.move_relative(d,v);
+  top_right_mtr.move_relative(-d,v);
+  bottom_left_mtr.move_relative(d,v);
+  bottom_right_mtr.move_relative(-d,v);
 }
+
+void turnRightNonAsync(double d, double v){ // 340 is a perfect right turn
+  turnRight(d,v);
+  waitUntilTarget(top_left_mtr.get_position()+d,top_right_mtr.get_position()-d,bottom_left_mtr.get_position()+d,bottom_right_mtr.get_position()-d);
+}
+
 void liftPot(int leftVal, int rightVal){
   if(leftVal>potLeft.get_value()){
     while(leftVal>potLeft.get_value() || rightVal<potRight.get_value()){

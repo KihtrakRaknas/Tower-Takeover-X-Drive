@@ -18,9 +18,7 @@
  * task, not resume it from where it left off.
  */
 
-
 void opcontrol() {
-
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
 	//myChassis.turnAngle(100);
@@ -107,7 +105,7 @@ void opcontrol() {
       ramp.move_velocity(35);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
-			ramp.move_velocity(-100);
+			//ramp.move_velocity(-100);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
       ramp.move_velocity(-150);
@@ -121,9 +119,9 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
-    /*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       autonomous();
-    }*/
+    }
 
 
 

@@ -75,6 +75,11 @@ void moveDrive(double xPos, double yPos, double turn, double angle){
 
   xPos *=200;
   yPos *=200;
+  if(thresh(xPos,10)==0&&thresh(yPos,10)==0){
+    xPos = 0;
+    yPos = 0;
+  }
+  turn = thresh(turn,10);
 
   //pros::lcd::print(7, "X: %f, Y:%f   ",xPos,yPos);
   /*
