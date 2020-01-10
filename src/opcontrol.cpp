@@ -47,6 +47,8 @@ void opcontrol() {
 
     armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     //0.1*abs(armRight.get_position()-pos)
 
 		pros::lcd::print(2, "L: %d; R: %d", potLeft.get_value(), potRight.get_value());
@@ -102,7 +104,7 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(35);
+      ramp.move_velocity(70);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			//ramp.move_velocity(-100);
