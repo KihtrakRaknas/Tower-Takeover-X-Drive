@@ -41,49 +41,60 @@ void autonomous() {
  int FRONT_RIGHT = 19;
  int BACK_LEFT = 5;
  int BACK_RIGHT = 7;
- int auton = 5;
-
+ int auton = 5; //5 is small and 6 is Big
+ int color = 1; //1 is blue and -1 is red
 auto chassis = ChassisControllerFactory::create(
     FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
     AbstractMotor::gearset::green,
     {6.0_in, 20_in}
 );
 auto profileController = AsyncControllerFactory::motionProfile(
-    0.5,  // Maximum linear velocity of the Chassis in m/s
+    5,  // Maximum linear velocity of the Chassis in m/s
     1.0,  // Maximum linear acceleration of the Chassis in m/s/s
     10.0, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-profileController.generatePath({
-  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-  Point{3.6_ft, 0_ft, 0_deg}},//3.8
-  "Blue Small First" // Profile name
-);
-profileController.generatePath({
-  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-  Point{2.1_ft, 0_ft, 0_deg}},//2.3
-  "Blue Small First Second" // Profile name
-);
-profileController.generatePath({
-  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-  Point{1.4_ft, 0_ft, 0_deg}},
-  "Blue Small Second" // Profile name
-);
-profileController.generatePath({
-  Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-  Point{1_ft, 0_ft, 0_deg}},
-  "Blue Small Third" // Profile name
-);
+if(auton == 5){
+  auto profileController = AsyncControllerFactory::motionProfile(
+      0.35,  // Maximum linear velocity of the Chassis in m/s
+      1.0,  // Maximum linear acceleration of the Chassis in m/s/s
+      10.0, // Maximum linear jerk of the Chassis in m/s/s/s
+      chassis // Chassis Controller
+  );
+}
 
+
+armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 if(auton==5){
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{3.8_ft, 0_ft, 0_deg}},//3.8
+    "Blue Small First" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{2.2_ft, 0_ft, 0_deg}},//2.3
+    "Blue Small First Second" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{1.2_ft, 0_ft, 0_deg}},
+    "Blue Small Second" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{1_ft, 0_ft, 0_deg}},
+    "Blue Small Third" // Profile name
+  );
   //flip out
   intake(-650);
   pros::delay(200);
-  lift(800, 100);
-  pros::delay(1000);
+  lift(1000, 100);
+  pros::delay(1200);
   intake(650);
-  lift(-500, 100);
-
+  lift(400, 100);
+  pros::delay(100);
   profileController.setTarget("Blue Small First");
   profileController.waitUntilSettled();
   delay(100);
@@ -93,22 +104,23 @@ if(auton==5){
        {6.0_in, 20_in}
   );
   profileController.setTarget("Blue Small First Second");
-  delay(500);
-  intake(0);
+  //delay(500);
+  //intake(0);
   profileController.waitUntilSettled();
   ChassisControllerFactory::create(
       FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
       AbstractMotor::gearset::green,
       {6.0_in, 20_in}
   );
-  turnRightNonAsync(-340*2+213,40);
+  turnRightNonAsync((-340*2+213) * color,40);
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
-  intake(-1200,200);
-  //delay(500);
-  stack();
-  intake(-200);
+  intake(-900,200);
   delay(100);
+  stack();
+  delay(100);
+  intake(-200);
+  delay(250);
   ChassisControllerFactory::create(
        -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
        AbstractMotor::gearset::green,
@@ -118,10 +130,34 @@ if(auton==5){
   profileController.waitUntilSettled();
   intake(0);
 }else if(auton == 6){
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},
+    Point{4.0_ft, 0_ft, 0_deg}},
+    "Blue Large First"
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},
+    Point{0.8_ft, 0_ft, 0_deg}},
+    "Blue Large First Second"
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},
+    Point{3.5_ft, 0_ft, 0_deg}},
+    "Blue Large Second"
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},
+    Point{1_ft, 0_ft, 0_deg}},
+    "Blue Large Third"
+  );
   //flip out
-  lift(200, 50);
-  intake(200);
-  profileController.setTarget("Blue Small First");
+  intake(-650);
+  pros::delay(200);
+  lift(1000, 100);
+  pros::delay(1200);
+  intake(650);
+  lift(350, 100);
+  profileController.setTarget("Blue Large First");
   profileController.waitUntilSettled();
   delay(100);
   ChassisControllerFactory::create(
@@ -129,15 +165,31 @@ if(auton==5){
        AbstractMotor::gearset::green,
        {6.0_in, 20_in}
   );
-  profileController.setTarget("Blue Small First Second");
+  profileController.setTarget("Blue Large First Second");
   delay(500);
-  intake(0);
+  //intake(0);
   profileController.waitUntilSettled();
   ChassisControllerFactory::create(
       FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
       AbstractMotor::gearset::green,
       {6.0_in, 20_in}
   );
+  turnRightNonAsync((340*2-220) * color,40);
+  profileController.setTarget("Blue Large Second");
+  profileController.waitUntilSettled();
+  intake(-1200,200);
+  //delay(500);
+  stack();
+  intake(-200);
+  delay(230);
+  ChassisControllerFactory::create(
+       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+   );
+  profileController.setTarget("Blue Large Third");
+  profileController.waitUntilSettled();
+  intake(0);
 }else if(auton==0){//Big Red
 moveDist(0.5,5);
 //liftPot(240,3090);
@@ -386,7 +438,7 @@ void stack(){
   waitUntilTarget(ramp, 3000+initialPos);
   ramp.move_relative(500,200);
   waitUntilTarget(ramp, 3500+initialPos);
-  ramp.move_relative(-2500,200);
+  ramp.move_relative(-4000,200);
 }
 
 void lift(double d, double v){

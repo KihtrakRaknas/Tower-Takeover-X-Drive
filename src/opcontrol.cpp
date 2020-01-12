@@ -17,7 +17,7 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-
+using namespace okapi;
 void opcontrol() {
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
@@ -26,6 +26,15 @@ void opcontrol() {
 	int loopCount = 0;
   double pos = 0;
   int liftSpeed = 200;
+	int FRONT_LEFT = 1;
+ int FRONT_RIGHT = 19;
+ int BACK_LEFT = 5;
+ int BACK_RIGHT = 7;
+	auto chassis = ChassisControllerFactory::create(
+	    FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
+	    AbstractMotor::gearset::green,
+	    {6.0_in, 20_in}
+	);
 	while (true) {
 
 		double gyroVal = gyro.get_value()/10;
@@ -45,6 +54,7 @@ void opcontrol() {
       armLeft.move_velocity(175);
     }*/
 
+		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -104,7 +114,7 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(70);
+      ramp.move_velocity(72);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			//ramp.move_velocity(-100);
@@ -121,9 +131,9 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+    /*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       autonomous();
-    }
+    }*/
 
 
 
