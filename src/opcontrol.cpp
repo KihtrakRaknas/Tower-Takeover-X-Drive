@@ -132,7 +132,7 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
       stackLoop=1;
     }
 
@@ -155,13 +155,13 @@ void opcontrol() {
       }
       else if (stackLoop<60)
       {
-		moveDrive(0,-100,0+thresh(partner.get_analog(ANALOG_RIGHT_X),10),0);
-		rollerLeft.move_velocity(-100);
+        moveDrive(0,-100,0+thresh(partner.get_analog(ANALOG_RIGHT_X),10),0);
+        rollerLeft.move_velocity(-100);
         rollerRight.move_velocity(100);
       }
       else if (stackLoop=70)
       {
-		stackLoop=0;
+        stackLoop=0;
       }
 
 
