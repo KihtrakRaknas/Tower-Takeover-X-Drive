@@ -30,6 +30,7 @@ void opcontrol() {
  int FRONT_RIGHT = 19;
  int BACK_LEFT = 5;
  int BACK_RIGHT = 7;
+ int stackLoop=0;
 	auto chassis = ChassisControllerFactory::create(
 	    FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
 	    AbstractMotor::gearset::green,
@@ -131,6 +132,40 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
+      stackLoop=1;
+    }
+
+    if(stackLoop>0){
+      stackLoop+=1;
+      if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
+        stackLoop=0;
+      }
+
+      if (stackLoop<20)
+      {
+        ramp.move_velocity(200);
+
+      }
+
+      else if (stackLoop<40)
+      {
+        ramp.move_velocity(50);
+
+      }
+      else if (stackLoop<60)
+      {
+		moveDrive(0,-100,0+thresh(partner.get_analog(ANALOG_RIGHT_X),10),0);
+		rollerLeft.move_velocity(-100);
+        rollerRight.move_velocity(100);
+      }
+      else if (stackLoop=70)
+      {
+		stackLoop=0;
+      }
+
+
+    }
     /*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       autonomous();
     }*/
