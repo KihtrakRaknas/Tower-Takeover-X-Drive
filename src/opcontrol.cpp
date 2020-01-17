@@ -114,7 +114,10 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(72);
+			if(ramp.get_position()>600)
+				ramp.move_velocity(40);
+			else
+      	ramp.move_velocity(150);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			//ramp.move_velocity(-100);
@@ -131,9 +134,9 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
-    /*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       autonomous();
-    }*/
+    }
 
 
 

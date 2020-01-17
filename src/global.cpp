@@ -1,6 +1,10 @@
 #include "main.h"
 #include "global.h"
 
+int FRONT_LEFT = 1;
+int FRONT_RIGHT = 19;
+int BACK_LEFT = 5;
+int BACK_RIGHT = 7;
 
 pros::Motor top_left_mtr(1);
 pros::Motor top_right_mtr(19);

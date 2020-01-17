@@ -1,6 +1,7 @@
 #include "main.h"
 #include "global.h"
 #include "lcd.h"
+#include "progSkills.h"
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -37,11 +38,7 @@ void autonomous() {
   top_right_mtr.move_relative(-500,30);
   bottom_left_mtr.move_relative(500,30);
   bottom_right_mtr.move_relative(-500,30);*/
-  int FRONT_LEFT = 1;
- int FRONT_RIGHT = 19;
- int BACK_LEFT = 5;
- int BACK_RIGHT = 7;
- int auton = 5; //5 is small and 6 is Big
+ int auton = -1; //5 is small and 6 is Big // -1 is skills
  int color = 1; //1 is blue and -1 is red
 auto chassis = ChassisControllerFactory::create(
     FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
@@ -66,7 +63,9 @@ if(auton == 5){
 
 armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-if(auton==5){
+if(auton==-1){
+  progSkills();
+}else if(auton==5){
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
     Point{3.8_ft, 0_ft, 0_deg}},//3.8
@@ -416,6 +415,14 @@ void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,i
   return;
 }
 
+#define THRESH 10
+void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,int bottomRightTarget, double thresh){
+  while(abs(top_left_mtr.get_position()-topLeftTarget)>thresh && abs(top_right_mtr.get_position()-topRightTarget)>thresh && abs(bottom_left_mtr.get_position()-bottomLeftTarget)>thresh && abs(bottom_right_mtr.get_position()-bottomRightTarget)>thresh ){
+    pros::delay(20);
+  }
+  return;
+}
+
 void waitUntilTarget(pros::Motor motor, int target){
   while(abs(motor.get_position()-target)>THRESH){
     pros::delay(20);
@@ -446,6 +453,22 @@ void lift(double d, double v){
   armLeft.move_absolute(-d, v);
 }
 
+void reverseDrive(){
+  ChassisControllerFactory::create(
+       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+}
+
+void forwardDrive(){
+  ChassisControllerFactory::create(
+       FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+}
+
 void turnRight(double d, double v){
   top_left_mtr.move_relative(d,v);
   top_right_mtr.move_relative(-d,v);
@@ -456,6 +479,11 @@ void turnRight(double d, double v){
 void turnRightNonAsync(double d, double v){ // 340 is a perfect right turn
   turnRight(d,v);
   waitUntilTarget(top_left_mtr.get_position()+d,top_right_mtr.get_position()-d,bottom_left_mtr.get_position()+d,bottom_right_mtr.get_position()-d);
+}
+
+void turnRightNonAsync(double d, double v, double thresh){ // 340 is a perfect right turn
+  turnRight(d,v);
+  waitUntilTarget(top_left_mtr.get_position()+d,top_right_mtr.get_position()-d,bottom_left_mtr.get_position()+d,bottom_right_mtr.get_position()-d, thresh);
 }
 
 void liftPot(int leftVal, int rightVal){
