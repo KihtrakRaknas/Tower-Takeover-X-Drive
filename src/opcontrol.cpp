@@ -19,6 +19,7 @@
  */
 using namespace okapi;
 void opcontrol() {
+	//master.rumble(".");
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
 	//myChassis.turnAngle(100);
@@ -169,7 +170,7 @@ void opcontrol() {
 
 
     }
-		
+
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       autonomous();
     }

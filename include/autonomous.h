@@ -16,5 +16,6 @@ void moveDistSide(double dist, double v);
  void intake(double d, double v);
  void liftPot(int leftVal, int rightVal);
  void moveDist(double dist, double v);
+ void stackSkills();
 
 #endif
