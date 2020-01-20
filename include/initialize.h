@@ -4,6 +4,3 @@
 #define GYRO_PORT 'B'
 
 #endif
-
-
-extern okapi::AsyncControllerFactory profileController;

@@ -2,6 +2,7 @@
 #include "global.h"
 #include "lcd.h"
 #include "progSkills.h"
+#include "unprotectedAuton.h"
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -64,68 +65,7 @@ armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 if(auton==-1){
   progSkills();
 }else if(auton==5){
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{3.8_ft, 0_ft, 0_deg}},//3.8
-    "Blue Small First" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.2_ft, 0_ft, 0_deg}},//2.3
-    "Blue Small First Second" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.2_ft, 0_ft, 0_deg}},
-    "Blue Small Second" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1_ft, 0_ft, 0_deg}},
-    "Blue Small Third" // Profile name
-  );
-  //flip out
-  intake(-650);
-  pros::delay(200);
-  lift(1000, 100);
-  pros::delay(1200);
-  intake(650);
-  lift(400, 100);
-  pros::delay(100);
-  profileController.setTarget("Blue Small First");
-  profileController.waitUntilSettled();
-  delay(100);
-  ChassisControllerFactory::create(
-       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
-       AbstractMotor::gearset::green,
-       {6.0_in, 20_in}
-  );
-  profileController.setTarget("Blue Small First Second");
-  //delay(500);
-  //intake(0);
-  profileController.waitUntilSettled();
-  ChassisControllerFactory::create(
-      FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
-      AbstractMotor::gearset::green,
-      {6.0_in, 20_in}
-  );
-  turnRightNonAsync((-340*2+213) * color,40);
-  profileController.setTarget("Blue Small Second");
-  profileController.waitUntilSettled();
-  intake(-900,200);
-  delay(100);
-  stack();
-  delay(100);
-  intake(-200);
-  delay(250);
-  ChassisControllerFactory::create(
-       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
-       AbstractMotor::gearset::green,
-       {6.0_in, 20_in}
-   );
-  profileController.setTarget("Blue Small Third");
-  profileController.waitUntilSettled();
-  intake(0);
+  //unprotectedAuton();
 }else if(auton == 6){
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},
@@ -448,10 +388,10 @@ void stack(){
 
 void stackSkills(){
   int initialPos = ramp.get_position();
-  ramp.move_relative(1800,100);
-  waitUntilTarget(ramp, 1800+initialPos);
-  ramp.move_relative(300,50);
-  waitUntilTarget(ramp, 2100+initialPos);
+  ramp.move_relative(800,100);
+  waitUntilTarget(ramp, 800+initialPos);
+  ramp.move_relative(1400,30);
+  waitUntilTarget(ramp, 2200+initialPos);
 }
 
 void lift(double d, double v){
@@ -470,6 +410,22 @@ void reverseDrive(){
 void forwardDrive(){
   ChassisControllerFactory::create(
        FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+}
+
+void leftDrive(){
+  ChassisControllerFactory::create(
+       -FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+}
+
+void rightDrive(){
+  ChassisControllerFactory::create(
+       FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, -BACK_RIGHT,
        AbstractMotor::gearset::green,
        {6.0_in, 20_in}
   );

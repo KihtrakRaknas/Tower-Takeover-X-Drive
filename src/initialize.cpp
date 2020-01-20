@@ -1,6 +1,7 @@
 #include "main.h"
 #include "global.h"
 #include "progSkills.h"
+#include "unprotectedAuton.h"
 using namespace okapi;
 void on_center_button() {
 	static bool pressed = false;
@@ -25,6 +26,8 @@ void initialize() {
 	pros::lcd::set_text(1, "Starting Initialization");
 	if(auton == -1)
 		preProgSkills();
+	else if(auton == 5)
+		//unprotectedAuton();
 	pros::lcd::set_text(1, "Finished Initialization");
 	master.rumble(".");
 }

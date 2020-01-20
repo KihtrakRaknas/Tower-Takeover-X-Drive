@@ -1,3 +1,4 @@
+#include "main.h"
 #ifndef AUTONOMOUS_H
 
 void autonomous();
@@ -10,6 +11,8 @@ void moveDistSide(double dist, double v);
  void turnRightNonAsync(double d, double v, double thresh);
  void reverseDrive();
   void forwardDrive();
+  void leftDrive();
+   void rightDrive();
  void stack();
  void delay(double d);
  void intake(double v);
@@ -17,5 +20,8 @@ void moveDistSide(double dist, double v);
  void liftPot(int leftVal, int rightVal);
  void moveDist(double dist, double v);
  void stackSkills();
+ void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,int bottomRightTarget, double thresh);
+ void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,int bottomRightTarget);
+ void waitUntilTarget(pros::Motor motor, int target);
 
 #endif

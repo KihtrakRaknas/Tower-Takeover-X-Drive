@@ -19,7 +19,8 @@
  */
 using namespace okapi;
 void opcontrol() {
-	//master.rumble(".");
+	master.rumble("-");
+	//autonomous();
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
 	//myChassis.turnAngle(100);
@@ -69,18 +70,23 @@ void opcontrol() {
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
-        armRight.move_velocity(100);
+        armRight.move_velocity(200);
+				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       //if(pos>0)
-        armRight.move_velocity(-100);
+        armRight.move_velocity(-200);
+				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
 			armRight.move_velocity(30);
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
 			armRight.move_velocity(-30);
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		}else{
 			armRight.move_velocity(0);
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 
 
@@ -99,11 +105,11 @@ void opcontrol() {
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
     }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      rollerLeft.move_velocity(-80);
-      rollerRight.move_velocity(80);
-    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
       rollerLeft.move_velocity(-1000);
       rollerRight.move_velocity(1000);
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+      rollerLeft.move_velocity(-80);
+      rollerRight.move_velocity(80);
     }else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
@@ -116,10 +122,10 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-			if(ramp.get_position()>600)
-				ramp.move_velocity(40);
+			if(ramp.get_position()>700)
+				ramp.move_velocity(20);
 			else
-      	ramp.move_velocity(150);
+      	ramp.move_velocity(200);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			//ramp.move_velocity(-100);
