@@ -122,8 +122,8 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-			if(ramp.get_position()>700)
-				ramp.move_velocity(20);
+			if(ramp.get_position()>750)
+				ramp.move_velocity(40);
 			else
       	ramp.move_velocity(200);
     }
