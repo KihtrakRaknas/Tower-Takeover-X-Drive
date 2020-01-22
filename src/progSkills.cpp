@@ -49,21 +49,6 @@ void preProgSkills(){//
     Point{0.3_ft, 0_ft, 0_deg}},//3.8
     "for4StackSmol" // Profile name
   );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2_ft, 0_ft, 0_deg}},//3.8
-    "leftIntoWall" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{0.5_ft, 0_ft, 0_deg}},//3.8
-    "rightFromWall" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{10_ft, 0_ft, 0_deg}},//3.8
-    "goToZone" // Profile name
-  );
 }
 
 void progSkills(){
@@ -90,40 +75,34 @@ void progSkills(){
   delay(100);
 
 
-  turnRightNonAsync(350,20,2);
-  delay(1000);
 
-  forwardDrive();
-  int v = 30;
-  top_left_mtr.move_velocity(-v);
-  bottom_left_mtr.move_velocity(v);
-  top_right_mtr.move_velocity(v);
-  bottom_right_mtr.move_velocity(-v);
-  delay(5000);
-  top_left_mtr.move_velocity(0);
-  top_right_mtr.move_velocity(0);
-  bottom_left_mtr.move_velocity(0);
-  bottom_right_mtr.move_velocity(0);
-  delay(500);
-  rightDrive();
-  profileController.setTarget("rightFromWall");
+
+
+
+  reverseDrive();
+  profileController.setTarget("revB4Stack");
   profileController.waitUntilSettled();
-
+  delay(100);
   forwardDrive();
-  profileController.setTarget("goToZone");
+  turnRightNonAsync(-130,20,2);
+  delay(100);
+  intake(200);
+  profileController.setTarget("for4Stack");
+  delay(2500);
   profileController.waitUntilSettled();
-
 
   lift(-100, 100);
 
-  intake(-200,200);
+  intake(-400,50);
   delay(500);
   int initialPos = ramp.get_position();
   ramp.move_relative(1700,100);
   waitUntilTarget(ramp, 1700+initialPos);
   initialPos = ramp.get_position();
   ramp.move_relative(600,20);
-  waitUntilTarget(ramp, 600+initialPos);
+  delay(500);
+  intake(-600,100);
+  delay(500);
   //intake(-100,200);
   //ramp.move_relative(400,30);
   //waitUntilTarget(ramp, 2200+initialPos);
@@ -150,5 +129,4 @@ void progSkills(){
 
   delay(3000);
   intake(0);
-  //stack();
 }

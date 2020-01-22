@@ -42,12 +42,12 @@ void preUnprotectedAuton(){
 
 void unprotectedAuton(){
   //flip out
-  intake(-650);
+  lift(1500, 100);
   pros::delay(200);
-  //lift(1000, 100);
+  intake(-650);
   pros::delay(1200);
   intake(650);
-  lift(200, 100);//lift(400, 100);
+  lift(400, 100);
   pros::delay(100);
   forwardDrive();
   profileController.setTarget("Blue Small First");

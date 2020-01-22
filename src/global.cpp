@@ -6,7 +6,7 @@ int FRONT_RIGHT = 19;
 int BACK_LEFT = 5;
 int BACK_RIGHT = 7;
 
-int auton = -1; //5 is small and 6 is Big // -1 is skills
+int auton = 5; //5 is small and 6 is Big // -1 is skills
 int color = 1; //1 is blue and -1 is red
 
 pros::Motor top_left_mtr(1);
