@@ -3,6 +3,31 @@
 #include "progSkills.h"
 #include "unprotectedAuton.h"
 using namespace okapi;
+
+ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
+    FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
+    AbstractMotor::gearset::green,
+    {6.0_in, 20_in}
+);
+//skillz
+/*
+AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
+    0.35,  // Maximum linear velocity of the Chassis in m/s
+    0.35,  // Maximum linear acceleration of the Chassis in m/s/s
+    1, // Maximum linear jerk of the Chassis in m/s/s/s
+    chassis // Chassis Controller
+);
+*/
+
+//UnprotectedAuton
+
+AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
+    .65,  // Maximum linear velocity of the Chassis in m/s
+    2,  // Maximum linear acceleration of the Chassis in m/s/s
+    5, // Maximum linear jerk of the Chassis in m/s/s/s
+    chassis // Chassis Controller
+);
+
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;
@@ -27,7 +52,7 @@ void initialize() {
 	if(auton == -1)
 		preProgSkills();
 	else if(auton == 5)
-		//unprotectedAuton();
+		preUnprotectedAuton();
 	pros::lcd::set_text(1, "Finished Initialization");
 	master.rumble(".");
 }

@@ -2,22 +2,11 @@
 #include "global.h"
 #include "lcd.h"
 #include "autonomous.h"
+#include "initialize.h"
 #include "progSkills.h"
 
+
 using namespace okapi;
-
-ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
-    FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
-    AbstractMotor::gearset::green,
-    {6.0_in, 20_in}
-);
-
-AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
-    0.35,  // Maximum linear velocity of the Chassis in m/s
-    0.35,  // Maximum linear acceleration of the Chassis in m/s/s
-    1, // Maximum linear jerk of the Chassis in m/s/s/s
-    chassis // Chassis Controller
-);
 
 void preProgSkills(){//
   profileController.generatePath({
@@ -60,6 +49,21 @@ void preProgSkills(){//
     Point{0.3_ft, 0_ft, 0_deg}},//3.8
     "for4StackSmol" // Profile name
   );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{2_ft, 0_ft, 0_deg}},//3.8
+    "leftIntoWall" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{0.5_ft, 0_ft, 0_deg}},//3.8
+    "rightFromWall" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{10_ft, 0_ft, 0_deg}},//3.8
+    "goToZone" // Profile name
+  );
 }
 
 void progSkills(){
@@ -86,22 +90,31 @@ void progSkills(){
   delay(100);
 
 
+  turnRightNonAsync(350,20,2);
+  delay(1000);
 
-
-
-  
-  reverseDrive();
-  profileController.setTarget("revB4Stack");
-  profileController.waitUntilSettled();
-  delay(100);
   forwardDrive();
-  turnRightNonAsync(-130,20,2);
-  delay(100);
-  intake(200);
-  profileController.setTarget("for4Stack");
-  delay(2500);
-  lift(-100, 100);
+  int v = 30;
+  top_left_mtr.move_velocity(-v);
+  bottom_left_mtr.move_velocity(v);
+  top_right_mtr.move_velocity(v);
+  bottom_right_mtr.move_velocity(-v);
+  delay(5000);
+  top_left_mtr.move_velocity(0);
+  top_right_mtr.move_velocity(0);
+  bottom_left_mtr.move_velocity(0);
+  bottom_right_mtr.move_velocity(0);
+  delay(500);
+  rightDrive();
+  profileController.setTarget("rightFromWall");
   profileController.waitUntilSettled();
+
+  forwardDrive();
+  profileController.setTarget("goToZone");
+  profileController.waitUntilSettled();
+
+
+  lift(-100, 100);
 
   intake(-200,200);
   delay(500);

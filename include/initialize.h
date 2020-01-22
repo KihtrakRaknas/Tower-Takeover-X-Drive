@@ -3,4 +3,7 @@
 
 #define GYRO_PORT 'B'
 
+extern okapi::ChassisControllerIntegrated chassis;
+extern okapi::AsyncMotionProfileController profileController;
+
 #endif

@@ -50,14 +50,6 @@ auto profileController = AsyncControllerFactory::motionProfile(
     10.0, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-if(auton == 5){
-  auto profileController = AsyncControllerFactory::motionProfile(
-      0.35,  // Maximum linear velocity of the Chassis in m/s
-      1.0,  // Maximum linear acceleration of the Chassis in m/s/s
-      10.0, // Maximum linear jerk of the Chassis in m/s/s/s
-      chassis // Chassis Controller
-  );
-}
 
 
 armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -65,7 +57,7 @@ armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 if(auton==-1){
   progSkills();
 }else if(auton==5){
-  //unprotectedAuton();
+  unprotectedAuton();
 }else if(auton == 6){
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},
