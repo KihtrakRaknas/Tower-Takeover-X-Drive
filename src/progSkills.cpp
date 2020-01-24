@@ -49,6 +49,11 @@ void preProgSkills(){//
     Point{0.3_ft, 0_ft, 0_deg}},//3.8
     "for4StackSmol" // Profile name
   );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{2.3_ft, 0_ft, 0_deg}},//3.8
+    "backUpFromStack" // Profile name
+  );
 }
 
 void progSkills(){
@@ -99,9 +104,9 @@ void progSkills(){
   ramp.move_relative(1700,100);
   waitUntilTarget(ramp, 1700+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(600,20);
+  ramp.move_relative(400,20);
   delay(500);
-  intake(-600,100);
+  intake(-400,100);
   delay(500);
   //intake(-100,200);
   //ramp.move_relative(400,30);
@@ -111,16 +116,18 @@ void progSkills(){
   profileController.waitUntilSettled();
   delay(750);
   reverseDrive();
-  profileController.setTarget("for4Stack");
+  profileController.setTarget("backUpFromStack");
   delay(1000);
-  ramp.move_relative(-2000,50);
+  ramp.move_relative(-2200,50);
   intake(-200);
   profileController.waitUntilSettled();
 
 
 
   forwardDrive();
-  turnRightNonAsync(400,20,2);
+  turnRightNonAsync(550,20,2);
+
+  lift(200, 100);
 
   intake(200);
 

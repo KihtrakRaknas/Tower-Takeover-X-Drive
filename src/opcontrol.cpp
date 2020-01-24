@@ -42,7 +42,7 @@ void opcontrol() {
 
 		double gyroVal = gyro.get_value()/10;
 
-		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
+		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),master.get_analog(ANALOG_RIGHT_X),(45-gyroVal)*PI/180);
     /*if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       armRight.move_velocity(-200);
     }
