@@ -10,24 +10,24 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
     {6.0_in, 20_in}
 );
 //skillz
-///*
+/*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     0.35,  // Maximum linear velocity of the Chassis in m/s
     0.35,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-//*/
+*/
 
 //UnprotectedAuton
-/*
+///*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     .65,  // Maximum linear velocity of the Chassis in m/s
-    2,  // Maximum linear acceleration of the Chassis in m/s/s
-    5, // Maximum linear jerk of the Chassis in m/s/s/s
+    1,  // Maximum linear acceleration of the Chassis in m/s/s
+    1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-*/
+//*/
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;
@@ -45,10 +45,14 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::ADIGyro gyro (GYRO_PORT);
+	//pros::ADIGyro gyro (GYRO_PORT);
 	//pros::delay(5000);
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Starting Initialization");
+  armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	if(auton == -1)
 		preProgSkills();
 	else if(auton == 5)

@@ -423,6 +423,22 @@ void rightDrive(){
   );
 }
 
+void turnRightDrive(){
+  ChassisControllerFactory::create(
+       FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+}
+
+void turnLeftDrive(){
+  ChassisControllerFactory::create(
+       -FRONT_LEFT, -FRONT_RIGHT, -BACK_LEFT, -BACK_RIGHT,
+       AbstractMotor::gearset::green,
+       {6.0_in, 20_in}
+  );
+}
+
 void turnRight(double d, double v){
   top_left_mtr.move_relative(d,v);
   top_right_mtr.move_relative(-d,v);

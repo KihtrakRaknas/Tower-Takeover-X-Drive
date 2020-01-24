@@ -30,7 +30,7 @@ void preUnprotectedAuton(){
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.3_ft, 0_ft, 0_deg}},
+    Point{1.2_ft, 0_ft, 0_deg}},
     "Blue Small Second" // Profile name
   );
   profileController.generatePath({
@@ -47,8 +47,9 @@ void unprotectedAuton(){
   intake(-650);
   pros::delay(1200);
   intake(650);
-  lift(400, 100);
+  lift(600, 100);
   pros::delay(100);
+
   forwardDrive();
   profileController.setTarget("Blue Small First");
   profileController.waitUntilSettled();
@@ -65,7 +66,7 @@ void unprotectedAuton(){
   lift(-100, 100);
 
   intake(-400,50);
-  delay(500);
+  delay(300);
   int initialPos = ramp.get_position();
   ramp.move_relative(1700,100);
   waitUntilTarget(ramp, 1700+initialPos);

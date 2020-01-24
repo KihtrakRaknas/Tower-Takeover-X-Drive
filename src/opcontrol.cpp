@@ -169,7 +169,7 @@ void opcontrol() {
         rollerLeft.move_velocity(-100);
         rollerRight.move_velocity(100);
       }
-      else if (stackLoop=70)
+      else if (stackLoop==70)
       {
         stackLoop=0;
       }
