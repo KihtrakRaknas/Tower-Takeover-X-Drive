@@ -47,7 +47,7 @@ void unprotectedAuton(){
   intake(-650);
   pros::delay(1200);
   intake(650);
-  lift(600, 100);
+  lift(400, 100);
   pros::delay(100);
 
   forwardDrive();
