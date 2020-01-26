@@ -64,7 +64,7 @@ double sqonetwentyseven(double num, double ex){
 }
 
 void moveDrive(double xPos, double yPos, double turn, double angle){
-  turn=sqonetwentyseven(turn,3);
+  turn=sqonetwentyseven(turn,2);
   xPos=sqonetwentyseven(xPos,1.2);
   yPos=sqonetwentyseven(yPos,1.2);
 

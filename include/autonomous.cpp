@@ -3,6 +3,8 @@
 #include "lcd.h"
 #include "progSkills.h"
 #include "unprotectedAuton.h"
+#include "protectedAuton.h"
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -59,146 +61,7 @@ if(auton==-1){
 }else if(auton==5){
   unprotectedAuton();
 }else if(auton == 6){
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},
-    Point{4.0_ft, 0_ft, 0_deg}},
-    "Blue Large First"
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},
-    Point{0.8_ft, 0_ft, 0_deg}},
-    "Blue Large First Second"
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},
-    Point{3.5_ft, 0_ft, 0_deg}},
-    "Blue Large Second"
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},
-    Point{1_ft, 0_ft, 0_deg}},
-    "Blue Large Third"
-  );
-  //flip out
-  intake(-650);
-  pros::delay(200);
-  lift(1000, 100);
-  pros::delay(1200);
-  intake(650);
-  lift(350, 100);
-  profileController.setTarget("Blue Large First");
-  profileController.waitUntilSettled();
-  delay(100);
-  ChassisControllerFactory::create(
-       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
-       AbstractMotor::gearset::green,
-       {6.0_in, 20_in}
-  );
-  profileController.setTarget("Blue Large First Second");
-  delay(500);
-  //intake(0);
-  profileController.waitUntilSettled();
-  ChassisControllerFactory::create(
-      FRONT_LEFT, -FRONT_RIGHT, BACK_LEFT, -BACK_RIGHT,
-      AbstractMotor::gearset::green,
-      {6.0_in, 20_in}
-  );
-  turnRightNonAsync((340*2-220) * color,40);
-  profileController.setTarget("Blue Large Second");
-  profileController.waitUntilSettled();
-  intake(-1200,200);
-  //delay(500);
-  stack();
-  intake(-200);
-  delay(230);
-  ChassisControllerFactory::create(
-       -FRONT_LEFT, FRONT_RIGHT, -BACK_LEFT, BACK_RIGHT,
-       AbstractMotor::gearset::green,
-       {6.0_in, 20_in}
-   );
-  profileController.setTarget("Blue Large Third");
-  profileController.waitUntilSettled();
-  intake(0);
-}else if(auton==0){//Big Red
-moveDist(0.5,5);
-//liftPot(240,3090);
-//liftPot(220,3100);
-lift(1500, 100);
-pros::delay(1000);
-intake(-650);
-lift(-500, 100);
-//pros::delay(1000);
-
-//pros::delay(15000);
-//liftPot(220,3100);
-//liftPot(220,3100);
-pros::delay(2000);
-intake(0);
-moveDistSide(1.75,20);
-pros::delay(500);
-moveDist(-5,30);
-pros::delay(1000);
-turnRight(195,40);
-pros::delay(1000);
-moveDist(-1,20);
-pros::delay(500);
-moveDistSide(4,30);
-pros::delay(1000);
-intake(750);
-moveDist(5,30);
-pros::delay(1500);
-/*moveDist(13, 20);
-pros::delay(3000);
-moveDist(-7, 20);
-pros::delay(2200);*/
-turnRight(-195,40);
-pros::delay(1000);
-intake(650);
-moveDist(9, 40);
-pros::delay(1500);
-turnRight(-97.5,40);
-pros::delay(500);
-lift(5000,200);
-moveDist(7,30);
-//ramp.move_velocity(-90);
-pros::delay(500);
-ramp.move_velocity(-90);
-delay(2000);
-ramp.move_velocity(0);
-pros::delay(15000);
-  /*lift(-1000);
-  pros::delay(1000);*/
-  //intake(0);
-  //lift(5000,20);
-/*  liftPot(260,3100);
-  intake(650);
-  pros::delay(2200);
-  pros::delay(15000);
-
-  intake(650);
-  move(200,12);
-  delay(5000);
-  move(-50,20);
-  delay(2000);
-  move(400,10);
-  delay(4500);
-  move(-400,30);
-  rollerLeft.move_velocity(0);
-  lift(5000,20);
-  delay(2500);
-
-  turnRight(280,30);
-  delay(4000);
-
-  intake(0);
-  move(100,20);
-  delay(2000);
-  stack();
-  //ramp.move_velocity(50);
-  move(50,10);
-  delay(100);
-  move(-200,30);
-  delay(2000);*/
+  protectedAuton();
 }
 else if(auton==1){//BlueBig
   moveDist(0.5,5);
