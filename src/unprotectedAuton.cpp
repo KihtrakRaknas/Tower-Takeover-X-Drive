@@ -47,8 +47,8 @@ void unprotectedAuton(){
   intake(-650);
   pros::delay(1200);
   intake(650);
-  lift(400, 100);
-  pros::delay(100);
+  lift(350, 100);
+  pros::delay(175);
 
   forwardDrive();
   profileController.setTarget("Blue Small First");
@@ -73,7 +73,7 @@ void unprotectedAuton(){
   initialPos = ramp.get_position();
   ramp.move_relative(600,20);
   delay(500);
-  intake(-600,100);
+  intake(-700,100);
   delay(500);
   reverseDrive();
   profileController.setTarget("Blue Small Third");

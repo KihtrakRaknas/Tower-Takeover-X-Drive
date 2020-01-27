@@ -41,7 +41,7 @@ void preProgSkills(){//
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.7_ft, 0_ft, 0_deg}},//3.8
+    Point{1.8_ft, 0_ft, 0_deg}},//3.8
     "for4Stack" // Profile name
   );
   profileController.generatePath({
@@ -54,10 +54,28 @@ void preProgSkills(){//
     Point{2.3_ft, 0_ft, 0_deg}},//3.8
     "backUpFromStack" // Profile name
   );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{2.3_ft, 0_ft, 0_deg}},//3.8
+    "for4Tower" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{1_ft, 0_ft, 0_deg}},//3.8
+    "backUpFromTower" // Profile name
+  );
 }
 
 void progSkills(){
-  lift(200, 100);
+  //flip out
+  lift(1500, 100);
+  pros::delay(200);
+  intake(-650);
+  pros::delay(1500);
+  lift(400, 100);
+
+  pros::delay(200);
+
   intake(650);
   profileController.setTarget("InFirst4");
   profileController.waitUntilSettled();
@@ -104,8 +122,8 @@ void progSkills(){
   ramp.move_relative(1700,100);
   waitUntilTarget(ramp, 1700+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(400,20);
-  delay(500);
+  ramp.move_relative(500,20);
+  delay(700);
   intake(-400,100);
   delay(500);
   //intake(-100,200);
@@ -125,14 +143,34 @@ void progSkills(){
 
 
   forwardDrive();
-  turnRightNonAsync(550,20,2);
+  turnRightNonAsync(470,20,2);
 
-  lift(200, 100);
+  lift(400, 100);
 
   intake(200);
 
-  /*profileController.setTarget("InFirst4");
-  profileController.waitUntilSettled();*/
+  profileController.setTarget("for4Tower");
+  profileController.waitUntilSettled();
+
+
+
+  reverseDrive();
+  profileController.setTarget("backUpFromTower");
+  delay(50);
+  intake(0);
+  intake(-400, 200);
+  profileController.waitUntilSettled();
+
+  lift(2200, 100);
+
+  delay(1000);
+
+  forwardDrive();
+  profileController.setTarget("backUpFromTower");
+  profileController.waitUntilSettled();
+
+  intake(-200);
+
 
   delay(3000);
   intake(0);

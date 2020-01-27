@@ -33,6 +33,7 @@ void opcontrol() {
  int BACK_LEFT = 5;
  int BACK_RIGHT = 7;
  int stackLoop=0;
+ bool deployed = false;
 	auto chassis = ChassisControllerFactory::create(
 	    FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
 	    AbstractMotor::gearset::green,
@@ -177,10 +178,21 @@ void opcontrol() {
 
     }
 
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
       autonomous();
     }
 
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&deployed==false){
+			deployed = true;
+			//flip out
+			lift(1500, 100);
+			pros::delay(200);
+			intake(-650);
+			pros::delay(1200);
+			lift(400, 100);
+
+			pros::delay(500);
+    }
 
 
 		//default code
