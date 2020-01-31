@@ -30,25 +30,25 @@ void preUnprotectedAuton(){
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.2_ft, 0_ft, 0_deg}},
+    Point{1.4_ft, 0_ft, 0_deg}},
     "Blue Small Second" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{5_ft, 0_ft, 0_deg}},
+    Point{3_ft, 0_ft, 0_deg}},
     "Blue Small Third" // Profile name
   );
 }
 
 void unprotectedAuton(){
   //flip out
-  lift(1500, 100);
+  /*lift(1500, 100);
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
+  lift(400, 100);
+  pros::delay(125);*/
   intake(650);
-  lift(350, 100);
-  pros::delay(175);
 
   forwardDrive();
   profileController.setTarget("Blue Small First");
@@ -64,8 +64,7 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
 
   lift(-100, 100);
-
-  intake(-400,50);
+  intake(-1400,200);
   delay(300);
   int initialPos = ramp.get_position();
   ramp.move_relative(1700,100);
@@ -73,7 +72,7 @@ void unprotectedAuton(){
   initialPos = ramp.get_position();
   ramp.move_relative(600,20);
   delay(500);
-  intake(-700,100);
+  intake(-600,100);
   delay(500);
   reverseDrive();
   profileController.setTarget("Blue Small Third");

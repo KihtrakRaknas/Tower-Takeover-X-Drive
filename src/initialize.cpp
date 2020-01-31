@@ -43,9 +43,15 @@ void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;
 	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed...");
-	} else {
-		pros::lcd::clear_line(2);
+		pros::lcd::set_text(2, "blue");
+	}
+}
+
+void on_left_button() {
+	static bool pressed = false;
+	pressed = !pressed;
+	if (pressed) {
+		pros::lcd::set_text(2, "red");
 	}
 }
 
@@ -59,11 +65,14 @@ void initialize() {
 	//pros::ADIGyro gyro (GYRO_PORT);
 	//pros::delay(5000);
 	pros::lcd::initialize();
+  pros::lcd::register_btn0_cb(on_left_button);
+  pros::lcd::register_btn1_cb(on_center_button);
 	pros::lcd::set_text(1, "Starting Initialization");
   armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  pros::lcd::print(2, "%d %d",auton, color);
 	if(auton == -1)
 		preProgSkills();
 	else if(auton == 5)

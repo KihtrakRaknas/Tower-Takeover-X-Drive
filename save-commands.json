@@ -1,0 +1,5 @@
+{
+	"commands": [
+		"*.cpp : prosv5 upload"
+	]
+}
