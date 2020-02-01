@@ -42,12 +42,12 @@ void preUnprotectedAuton(){
 
 void unprotectedAuton(){
   //flip out
-  /*lift(1500, 100);
+  lift(1500, 100);
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
   lift(400, 100);
-  pros::delay(125);*/
+  pros::delay(125);
   intake(650);
 
   forwardDrive();
@@ -64,7 +64,7 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
 
   lift(-100, 100);
-  intake(-1400,200);
+  intake(-1200,200);
   delay(300);
   int initialPos = ramp.get_position();
   ramp.move_relative(1700,100);
@@ -72,7 +72,7 @@ void unprotectedAuton(){
   initialPos = ramp.get_position();
   ramp.move_relative(600,20);
   delay(500);
-  intake(-600,100);
+  intake(-700,100);
   delay(500);
   reverseDrive();
   profileController.setTarget("Blue Small Third");

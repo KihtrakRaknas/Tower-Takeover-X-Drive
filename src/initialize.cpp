@@ -24,8 +24,8 @@ AsyncMotionProfileController profileController = AsyncControllerFactory::motionP
 ///*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     .65,  // Maximum linear velocity of the Chassis in m/s
-    1,  // Maximum linear acceleration of the Chassis in m/s/s
-    1, // Maximum linear jerk of the Chassis in m/s/s/s
+    .6,  // Maximum linear acceleration of the Chassis in m/s/s
+    .6, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
 //*/
