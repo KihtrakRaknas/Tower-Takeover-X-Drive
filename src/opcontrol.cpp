@@ -39,6 +39,22 @@ void opcontrol() {
 	    AbstractMotor::gearset::green,
 	    {6.0_in, 20_in}
 	);
+
+	ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+//auto deploy
+/*
+	lift(1500, 100);
+	pros::delay(200);
+	intake(-650);
+	pros::delay(1200);
+	lift(400, 100);
+	pros::delay(1000);
+	*/
 	while (true) {
 
 		double gyroVal = gyro.get_value()/10;
@@ -141,41 +157,6 @@ void opcontrol() {
       ramp.move_velocity(-100);
     }else {
       ramp.move_velocity(0);
-    }
-
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
-      stackLoop=1;
-    }
-
-    if(stackLoop>0){
-      stackLoop+=1;
-      if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
-        stackLoop=0;
-      }
-
-      if (stackLoop<20)
-      {
-        ramp.move_velocity(200);
-
-      }
-
-      else if (stackLoop<40)
-      {
-        ramp.move_velocity(50);
-
-      }
-      else if (stackLoop<60)
-      {
-        moveDrive(0,-100,0+thresh(partner.get_analog(ANALOG_RIGHT_X),10),0);
-        rollerLeft.move_velocity(-100);
-        rollerRight.move_velocity(100);
-      }
-      else if (stackLoop==70)
-      {
-        stackLoop=0;
-      }
-
-
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){

@@ -21,24 +21,24 @@ AsyncMotionProfileController profileController = AsyncControllerFactory::motionP
  */
 
 //UnprotectedAuton
-///*
+/*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
-    .65,  // Maximum linear velocity of the Chassis in m/s
+    1.0,  // Maximum linear velocity of the Chassis in m/s
     .6,  // Maximum linear acceleration of the Chassis in m/s/s
     .6, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-//*/
+*/
 
 //ProtectedAuton
-/*
+///*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     1.5,  // Maximum linear velocity of the Chassis in m/s
     1,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-*/
+//*/
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;

@@ -97,11 +97,6 @@ void progSkills(){
   profileController.waitUntilSettled();
   delay(100);
 
-
-
-
-
-
   reverseDrive();
   profileController.setTarget("revB4Stack");
   profileController.waitUntilSettled();
@@ -116,23 +111,17 @@ void progSkills(){
 
   lift(-100, 100);
 
-  intake(-400,50);
-  delay(500);
+  lift(-70, 100);
+  intake(-1200,200);
+  delay(500); //300
   int initialPos = ramp.get_position();
   ramp.move_relative(1700,100);
   waitUntilTarget(ramp, 1700+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(500,20);
-  delay(700);
-  intake(-400,100);
+  ramp.move_relative(600,20);
   delay(500);
-  //intake(-100,200);
-  //ramp.move_relative(400,30);
-  //waitUntilTarget(ramp, 2200+initialPos);
-  delay(100);
-  profileController.setTarget("for4StackSmol");
-  profileController.waitUntilSettled();
-  delay(750);
+  intake(-700,100);
+  delay(500);
   reverseDrive();
   profileController.setTarget("backUpFromStack");
   delay(1000);
@@ -143,7 +132,7 @@ void progSkills(){
 
 
   forwardDrive();
-  turnRightNonAsync(470,20,2);
+  turnRightNonAsync(353,20,2); //470 (like 180)
 
   lift(400, 100);
 

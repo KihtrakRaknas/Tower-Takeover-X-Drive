@@ -42,6 +42,7 @@ void preUnprotectedAuton(){
 
 void unprotectedAuton(){
   //flip out
+  ramp.set_brake_mode(MOTOR_BRAKE_HOLD);
   lift(1500, 100);
   pros::delay(200);
   intake(-650);
@@ -59,21 +60,21 @@ void unprotectedAuton(){
   //intake(0);
   profileController.waitUntilSettled();
   forwardDrive();
-  turnRightNonAsync((-340*2+213) * color,40);
+  turnRightNonAsync((-340*2+213) * color,46); //40 mmmmmmmmjh
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
 
-  lift(-100, 100);
+  lift(-60, 100);
   intake(-1200,200);
   delay(300);
   int initialPos = ramp.get_position();
-  ramp.move_relative(1700,100);
+  ramp.move_relative(1700,150); //100
   waitUntilTarget(ramp, 1700+initialPos);
   initialPos = ramp.get_position();
   ramp.move_relative(600,20);
-  delay(500);
-  intake(-700,100);
-  delay(500);
+  delay(300);
+  intake(-950,300); //100 spd
+  delay(150); //500
   reverseDrive();
   profileController.setTarget("Blue Small Third");
   profileController.waitUntilSettled();

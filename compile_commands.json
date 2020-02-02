@@ -203,11 +203,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/protectedAuton.cpp.o",
-            "src\\protectedAuton.cpp"
+            "bin/unprotectedAuton.cpp.o",
+            "src\\unprotectedAuton.cpp"
         ],
         "directory": "C:\\Users\\karth\\Documents\\Github\\Tower-Takeover-X-Drive",
-        "file": "src\\protectedAuton.cpp"
+        "file": "src\\unprotectedAuton.cpp"
     },
     {
         "arguments": [
@@ -273,11 +273,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/unprotectedAuton.cpp.o",
-            "src\\unprotectedAuton.cpp"
+            "bin/initialize.cpp.o",
+            "src\\initialize.cpp"
         ],
         "directory": "C:\\Users\\karth\\Documents\\Github\\Tower-Takeover-X-Drive",
-        "file": "src\\unprotectedAuton.cpp"
+        "file": "src\\initialize.cpp"
     },
     {
         "arguments": [
@@ -308,10 +308,10 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/initialize.cpp.o",
-            "src\\initialize.cpp"
+            "bin/protectedAuton.cpp.o",
+            "src\\protectedAuton.cpp"
         ],
         "directory": "C:\\Users\\karth\\Documents\\Github\\Tower-Takeover-X-Drive",
-        "file": "src\\initialize.cpp"
+        "file": "src\\protectedAuton.cpp"
     }
 ]
