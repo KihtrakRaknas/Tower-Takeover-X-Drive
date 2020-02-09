@@ -52,13 +52,12 @@ void protectedAuton(){
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
-  lift(400, 100);
+  lift(100, 100);
 
   pros::delay(100);
 
   intake(650);
-
-  //pros::delay(50);
+  pros::delay(50);
   /*if(color == 1){
     leftDrive(); //blue
   }
@@ -94,6 +93,12 @@ void protectedAuton(){
   else{
     rightDrive();
   }
+  profileController.setTarget("Left Shift");
+  profileController.waitUntilSettled();
+  forwardDrive();
+  profileController.setTarget("Shift");
+  profileController.waitUntilSettled();
+  reverseDrive();
   profileController.setTarget("Next Cube 2");
   profileController.waitUntilSettled();
   forwardDrive();

@@ -47,7 +47,7 @@ void unprotectedAuton(){
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
-  lift(200, 100);
+  lift(100, 100);
   pros::delay(125);
   intake(650);
 
@@ -56,15 +56,16 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
-  //delay(500);
-  //intake(0);
+  delay(500);
+  intake(0);
   profileController.waitUntilSettled();
+
   forwardDrive();
-  turnRightNonAsync((-340*2+213) * color,46); //40 mmmmmmmmjh
+  turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
 
-  lift(-60, 100);
+  lift(-30, 100);
   intake(-1200,200);
   delay(300);
   int initialPos = ramp.get_position();
