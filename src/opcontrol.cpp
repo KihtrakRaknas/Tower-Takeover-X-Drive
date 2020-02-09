@@ -43,8 +43,6 @@ void opcontrol() {
 	ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 //auto deploy
 /*
@@ -77,8 +75,13 @@ void opcontrol() {
 		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		if(ramp.get_position()<800){
+			rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		}else{
+			rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+			rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		}
     //0.1*abs(armRight.get_position()-pos)
 
 		pros::lcd::print(2, "L: %d; R: %d", potLeft.get_value(), potRight.get_value());
@@ -122,11 +125,19 @@ void opcontrol() {
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
     }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      rollerLeft.move_velocity(-1000);
-      rollerRight.move_velocity(1000);
+			if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+				rollerLeft.move_velocity(-50);
+	      rollerRight.move_velocity(50);
+			}else{
+				rollerLeft.move_velocity(-1000);
+				rollerRight.move_velocity(1000);
+			}
     }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
       rollerLeft.move_velocity(-80);
       rollerRight.move_velocity(80);
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
+      rollerLeft.move_velocity(-140);
+      rollerRight.move_velocity(140);
     }else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
@@ -139,10 +150,14 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-			if(ramp.get_position()>750)
+			int MIN_SPEED = 40;
+			int speed = 950+MIN_SPEED-ramp.get_position();
+			if(speed<MIN_SPEED)
+				speed = MIN_SPEED;
+			/*if(ramp.get_position()>750)
 				ramp.move_velocity(40);
-			else
-      	ramp.move_velocity(200);
+			else*/
+      	ramp.move_velocity(speed);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
 			//ramp.move_velocity(-100);
