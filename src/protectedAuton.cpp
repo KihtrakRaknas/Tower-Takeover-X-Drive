@@ -52,12 +52,12 @@ void protectedAuton(){
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
-  lift(100, 100);
+  lift(250, 100);
 
   pros::delay(100);
 
   intake(650);
-  pros::delay(50);
+  //pros::delay(50);
   /*if(color == 1){
     leftDrive(); //blue
   }
@@ -87,18 +87,22 @@ void protectedAuton(){
   reverseDrive();
   profileController.setTarget("Shift");
   profileController.waitUntilSettled();*/
+  forwardDrive();
+  profileController.setTarget("Shift");
+  profileController.waitUntilSettled();
+  reverseDrive();
   if(color == -1){
     leftDrive(); //red
   }
   else{
     rightDrive();
   }
-  profileController.setTarget("Left Shift");
+  /*profileController.setTarget("Left Shift");
   profileController.waitUntilSettled();
   forwardDrive();
   profileController.setTarget("Shift");
   profileController.waitUntilSettled();
-  reverseDrive();
+  reverseDrive();*/
   profileController.setTarget("Next Cube 2");
   profileController.waitUntilSettled();
   forwardDrive();
@@ -108,7 +112,7 @@ void protectedAuton(){
   /*profileController.setTarget("Smol Shift");
   profileController.waitUntilSettled();*/
 
-  turnRightNonAsync(-340 * color, 40, 2);
+  turnRightNonAsync(-340 * color, 46, 2);
   forwardDrive();
   profileController.setTarget("Shift");
   profileController.waitUntilSettled();
@@ -134,9 +138,10 @@ void protectedAuton(){
   initialPos = ramp.get_position();
   ramp.move_relative(600,20);
   delay(300);
-  intake(-950,300); //100 spd
+  intake(-970,300); //100 spd
   delay(150); //500
   reverseDrive();
+
 
   //lift(-100, 100);
   /*intake(-800,200);

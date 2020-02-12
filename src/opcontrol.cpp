@@ -151,7 +151,8 @@ void opcontrol() {
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
 			int MIN_SPEED = 40;
-			int speed = 950+MIN_SPEED-ramp.get_position();
+			int speed = 750+MIN_SPEED-ramp.get_position();
+			speed = pow((speed/200),1)*200;
 			if(speed<MIN_SPEED)
 				speed = MIN_SPEED;
 			/*if(ramp.get_position()>750)
