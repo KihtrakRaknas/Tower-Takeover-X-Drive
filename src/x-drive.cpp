@@ -111,7 +111,7 @@ void moveDrive(double xPos, double yPos, double turn, double angle){
   bottom_right_mtr.move(-1*turn);
   */
 
-  pros::lcd::print(3, "TL: %d; TR: %d; BL: %d; BR: %d; ", top_left_mtr.get_actual_velocity(),top_right_mtr.get_actual_velocity(),bottom_left_mtr.get_actual_velocity(),bottom_right_mtr.get_actual_velocity());
+  pros::lcd::print(3, "TL: %5.2f; TR: %5.2f; BL: %5.2f; BR: %5.2f; ", top_left_mtr.get_actual_velocity(),top_right_mtr.get_actual_velocity(),bottom_left_mtr.get_actual_velocity(),bottom_right_mtr.get_actual_velocity());
 
   top_left_mtr.move_velocity(yPos+turn);
   top_right_mtr.move_velocity(xPos+turn);
