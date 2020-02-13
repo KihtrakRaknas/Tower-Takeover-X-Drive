@@ -5,6 +5,14 @@
 
 #endif
 
+extern pros::Motor top_left_mtr;
+extern int FRONT_LEFT;
+extern int FRONT_RIGHT;
+extern int BACK_LEFT;
+extern int BACK_RIGHT;
+
+extern int auton;
+extern int color;
 
 extern pros::Motor top_left_mtr;
 extern pros::Motor top_right_mtr;

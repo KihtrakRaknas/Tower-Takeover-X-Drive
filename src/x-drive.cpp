@@ -45,8 +45,30 @@ double mapCircleToSquare(double mainCord, double secondaryCord){
   return .5 * sqrt(2+2*mainCord*sqrt(2)+mainCord*mainCord-secondaryCord*secondaryCord) - .5 * sqrt(2-2*mainCord*sqrt(2)+mainCord*mainCord-secondaryCord*secondaryCord);
 }
 
+double sqonetwentyseven(double num){
+  if(num==0)
+    return 0;
+  num/=127;
+  num=pow(num,2)*num/fabs(num);
+  num*=127;
+  return num;
+}
+
+double sqonetwentyseven(double num, double ex){
+  if(num==0)
+    return 0;
+  num/=127;
+  num=pow(fabs(num),ex)*num/fabs(num);
+  num*=127;
+  return num;
+}
+
 void moveDrive(double xPos, double yPos, double turn, double angle){
-  pros::lcd::print(6, "X: %f, Y:%f   ",xPos,yPos);
+  turn=sqonetwentyseven(turn,2);
+  xPos=sqonetwentyseven(xPos,1.2);
+  yPos=sqonetwentyseven(yPos,1.2);
+
+  pros::lcd::print(6, "X: %f, Y:%f, T:%f",xPos,yPos,turn);
   //Get the X and Y coordinates from the controller
   double oldXPos = xPos;
   //Use a rotation matrix to get new coordinates
@@ -62,7 +84,7 @@ void moveDrive(double xPos, double yPos, double turn, double angle){
   xPos = forceCircleCords(xPos,yPos);
   yPos = forceCircleCords(yPos,oldXPos);
 
-  pros::lcd::print(7, "X: %f, Y:%f  s",xPos,yPos);
+  //pros::lcd::print(7, "X: %f, Y:%f  s",xPos,yPos);
 
   //optimize speed by scaling from a circle to a mapCircleToSquare
   oldXPos = xPos;
@@ -75,8 +97,13 @@ void moveDrive(double xPos, double yPos, double turn, double angle){
 
   xPos *=200;
   yPos *=200;
+  if(thresh(xPos,3)==0&&thresh(yPos,3)==0){
+    xPos = 0;
+    yPos = 0;
+  }
+  turn = thresh(turn,3);
 
-  //pros::lcd::print(7, "X: %f, Y:%f   ",xPos,yPos);
+  pros::lcd::print(7, "X: %f, Y:%f   ",xPos,yPos);
   /*
   top_left_mtr.move(turn);
   top_right_mtr.move(-1*turn);

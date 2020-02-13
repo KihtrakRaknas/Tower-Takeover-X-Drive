@@ -17,10 +17,10 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-
-
+using namespace okapi;
 void opcontrol() {
-
+	master.rumble("-");
+	//autonomous();
 	pros::ADIGyro gyro (GYRO_PORT);
 	//okapi::ADIGyro gyro2 ('B');
 	//myChassis.turnAngle(100);
@@ -28,11 +28,36 @@ void opcontrol() {
 	int loopCount = 0;
   double pos = 0;
   int liftSpeed = 200;
+	int FRONT_LEFT = 1;
+ int FRONT_RIGHT = 19;
+ int BACK_LEFT = 5;
+ int BACK_RIGHT = 7;
+ int stackLoop=0;
+ bool deployed = false;
+	auto chassis = ChassisControllerFactory::create(
+	    FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
+	    AbstractMotor::gearset::green,
+	    {6.0_in, 20_in}
+	);
+
+	ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+//auto deploy
+/*
+	lift(1500, 100);
+	pros::delay(200);
+	intake(-650);
+	pros::delay(1200);
+	lift(400, 100);
+	pros::delay(1000);
+	*/
 	while (true) {
 
 		double gyroVal = gyro.get_value()/10;
 
-		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),thresh(master.get_analog(ANALOG_RIGHT_X),10)+thresh(partner.get_analog(ANALOG_RIGHT_X),10),(45-gyroVal)*PI/180);
+		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),master.get_analog(ANALOG_RIGHT_X),(45-gyroVal)*PI/180);
     /*if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       armRight.move_velocity(-200);
     }
@@ -47,8 +72,16 @@ void opcontrol() {
       armLeft.move_velocity(175);
     }*/
 
+		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		if(ramp.get_position()<800){
+			rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		}else{
+			rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+			rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		}
     //0.1*abs(armRight.get_position()-pos)
 
 		pros::lcd::print(2, "L: %d; R: %d", potLeft.get_value(), potRight.get_value());
@@ -57,18 +90,23 @@ void opcontrol() {
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       //if(pos<5500)
-        armRight.move_velocity(100);
+        armRight.move_velocity(200);
+				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }
     else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       //if(pos>0)
-        armRight.move_velocity(-100);
+        armRight.move_velocity(-200);
+				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
 			armRight.move_velocity(30);
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
 			armRight.move_velocity(-30);
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		}else{
 			armRight.move_velocity(0);
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 
 
@@ -87,11 +125,19 @@ void opcontrol() {
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
     }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+			if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+				rollerLeft.move_velocity(-50);
+	      rollerRight.move_velocity(50);
+			}else{
+				rollerLeft.move_velocity(-1000);
+				rollerRight.move_velocity(1000);
+			}
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
       rollerLeft.move_velocity(-80);
       rollerRight.move_velocity(80);
-    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
-      rollerLeft.move_velocity(-1000);
-      rollerRight.move_velocity(1000);
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
+      rollerLeft.move_velocity(-140);
+      rollerRight.move_velocity(140);
     }else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
@@ -104,10 +150,18 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      ramp.move_velocity(35);
+			int MIN_SPEED = 40;
+			int speed = 750+MIN_SPEED-ramp.get_position();
+			speed = pow((speed/200),1)*200;
+			if(speed<MIN_SPEED)
+				speed = MIN_SPEED;
+			/*if(ramp.get_position()>750)
+				ramp.move_velocity(40);
+			else*/
+      	ramp.move_velocity(speed);
     }
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
-			ramp.move_velocity(-100);
+			//ramp.move_velocity(-100);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
       ramp.move_velocity(-150);
@@ -121,10 +175,21 @@ void opcontrol() {
       ramp.move_velocity(0);
     }
 
-    /*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
       autonomous();
-    }*/
+    }
 
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&deployed==false){
+			deployed = true;
+			//flip out
+			lift(1500, 100);
+			pros::delay(200);
+			intake(-650);
+			pros::delay(1200);
+			lift(400, 100);
+
+			pros::delay(500);
+    }
 
 
 		//default code
