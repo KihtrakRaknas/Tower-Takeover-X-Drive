@@ -84,6 +84,8 @@ void moveDrive(double xPos, double yPos, double turn, double angle){
   bottom_right_mtr.move(-1*turn);
   */
 
+  pros::lcd::print(3, "TL: %d; TR: %d; BL: %d; BR: %d; ", top_left_mtr.get_actual_velocity(),top_right_mtr.get_actual_velocity(),bottom_left_mtr.get_actual_velocity(),bottom_right_mtr.get_actual_velocity());
+
   top_left_mtr.move_velocity(yPos+turn);
   top_right_mtr.move_velocity(xPos+turn);
   bottom_left_mtr.move_velocity(-1*xPos+turn);
