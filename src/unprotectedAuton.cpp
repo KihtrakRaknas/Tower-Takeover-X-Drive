@@ -20,12 +20,12 @@ void preUnprotectedAuton(){
   */
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{4_ft, 0_ft, 0_deg}},//3.8
+    Point{4.1_ft, 0_ft, 0_deg}},//3.8
     "Blue Small First" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.4_ft, 0_ft, 0_deg}},//2.3
+    Point{2.5_ft, 0_ft, 0_deg}},//2.3
     "Blue Small First Second" // Profile name
   );
   profileController.generatePath({
@@ -43,20 +43,27 @@ void preUnprotectedAuton(){
 void unprotectedAuton(){
   //flip out
   ramp.set_brake_mode(MOTOR_BRAKE_HOLD);
-  lift(1500, 100);
+  top_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  top_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  lift(1450, 100);
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
-  lift(200, 100);
+  lift(100, 100);
   pros::delay(125);
   intake(650);
-
+  top_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+  top_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+  bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+  bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
   forwardDrive();
   profileController.setTarget("Blue Small First");
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
-  delay(500);
+  delay(1500);
   intake(0);
   profileController.waitUntilSettled();
 
@@ -66,18 +73,19 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
 
   lift(-30, 100);
-  intake(-1200,200);
+  intake(-1400,200);
   delay(300);
   int initialPos = ramp.get_position();
-  ramp.move_relative(1700,150); //100
-  waitUntilTarget(ramp, 1700+initialPos);
+  ramp.move_relative(2350,150); //100
+  waitUntilTarget(ramp, 2350+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(600,20);
+  ramp.move_relative(700,40);
   delay(300);
-  intake(-970,300); //100 spd
+  intake(-1000,350); //100 spd
   delay(150); //500
   reverseDrive();
   profileController.setTarget("Blue Small Third");
+  intake(-100);
   profileController.waitUntilSettled();
   intake(0);
 }
