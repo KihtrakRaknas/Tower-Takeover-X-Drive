@@ -61,7 +61,7 @@ void unprotectedAuton(){
   forwardDrive();
   profileController.setTarget("Blue Small First");
   delay(2000);
-  if(lineSensor.get_value()>1400)
+  if(lineSensor.get_value()>1500)
     delay(15*1000);
   profileController.waitUntilSettled();
   reverseDrive();
