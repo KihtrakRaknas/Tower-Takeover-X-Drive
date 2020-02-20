@@ -20,12 +20,12 @@ void preUnprotectedAuton(){
   */
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{4.1_ft, 0_ft, 0_deg}},//3.8
+    Point{4.2_ft, 0_ft, 0_deg}},//3.8
     "Blue Small First" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.5_ft, 0_ft, 0_deg}},//2.3
+    Point{2.6_ft, 0_ft, 0_deg}},//2.3
     "Blue Small First Second" // Profile name
   );
   profileController.generatePath({
@@ -35,7 +35,7 @@ void preUnprotectedAuton(){
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{3_ft, 0_ft, 0_deg}},
+    Point{2_ft, 0_ft, 0_deg}},
     "Blue Small Third" // Profile name
   );
 }
@@ -47,12 +47,13 @@ void unprotectedAuton(){
   top_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
-  lift(1450, 100);
+  /*lift(1450, 100);
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
   lift(100, 100);
-  pros::delay(125);
+  pros::delay(125);*/
+  int OGline = lineSensor.get_value();
   intake(650);
   top_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
   top_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
@@ -60,9 +61,24 @@ void unprotectedAuton(){
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
   forwardDrive();
   profileController.setTarget("Blue Small First");
-  delay(2000);
-  if(lineSensor.get_value()>1500)
-    delay(15*1000);
+  delay(1500);
+  pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-200);
+  if(lineSensor.get_value()>OGline-100){
+    pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-200);
+    printf("Line Sensor: %d", lineSensor.get_value());
+    master.rumble("-");
+    reverseDrive();
+    profileController.setTarget("Blue Small First Second");
+    rollerRight.move_velocity(0);
+    rollerLeft.move_velocity(0);
+    while(true){
+      top_left_mtr.move_velocity(0);
+      top_right_mtr.move_velocity(0);
+      bottom_left_mtr.move_velocity(0);
+      bottom_right_mtr.move_velocity(0);
+    }
+    delay(13*1000);
+  }
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
