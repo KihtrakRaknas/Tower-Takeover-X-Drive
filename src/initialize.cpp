@@ -73,6 +73,7 @@ void initialize() {
   rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   pros::lcd::print(2, "%d %d",auton, color);
+  lineSensor.calibrate();
 	if(auton == -1)
 		preProgSkills();
 	else if(auton == 5)

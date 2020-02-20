@@ -60,6 +60,9 @@ void unprotectedAuton(){
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
   forwardDrive();
   profileController.setTarget("Blue Small First");
+  delay(2000);
+  if(lineSensor.get_value()>1400)
+    delay(15*1000);
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");

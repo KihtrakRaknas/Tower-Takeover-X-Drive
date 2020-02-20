@@ -84,7 +84,7 @@ void opcontrol() {
 		}
     //0.1*abs(armRight.get_position()-pos)
 
-		pros::lcd::print(2, "L: %d; R: %d", potLeft.get_value(), potRight.get_value());
+		pros::lcd::print(2, "L: %d", lineSensor.get_value());
 
     //pros::lcd::print(3, "pos: %f",pos);
 
