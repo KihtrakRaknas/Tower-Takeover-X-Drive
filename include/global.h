@@ -13,6 +13,7 @@ extern int BACK_RIGHT;
 
 extern int auton;
 extern int color;
+extern bool deploy;
 
 extern pros::Motor top_left_mtr;
 extern pros::Motor top_right_mtr;

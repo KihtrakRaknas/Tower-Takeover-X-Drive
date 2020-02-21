@@ -47,11 +47,13 @@ void unprotectedAuton(){
   top_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
-  lift(1450, 100);
-  pros::delay(200);
-  intake(-650);
-  pros::delay(1200);
-  lift(100, 100);
+  if(deploy){
+    lift(1450, 100);
+    pros::delay(200);
+    intake(-650);
+    pros::delay(1200);
+    lift(100, 100);
+  }
   pros::delay(125);
   int OGline = lineSensor.get_value();
   intake(650);

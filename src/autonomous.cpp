@@ -55,9 +55,10 @@ auto profileController = AsyncControllerFactory::motionProfile(
     chassis // Chassis Controller
 );
 
-
 armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+
 if(auton==-1){
   progSkills();
 }else if(auton==5){

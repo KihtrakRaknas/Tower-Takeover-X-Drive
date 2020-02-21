@@ -48,11 +48,13 @@ void preProtectedAuton(){
 void protectedAuton(){
   //flip out
   ramp.set_brake_mode(MOTOR_BRAKE_HOLD);
-  lift(1500, 100);
-  pros::delay(200);
-  intake(-650);
-  pros::delay(1200);
-  lift(250, 100);
+  if(deploy){
+    lift(1500, 100);
+    pros::delay(200);
+    intake(-650);
+    pros::delay(1200);
+    lift(250, 100);
+  }
 
   pros::delay(100);
 
