@@ -44,6 +44,8 @@ void opcontrol() {
 	armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
+	driveBrakeHold(false);
+
 //auto deploy
 /*
 	lift(1500, 100);
@@ -84,7 +86,7 @@ void opcontrol() {
 		}
     //0.1*abs(armRight.get_position()-pos)
 
-		pros::lcd::print(2, "L: %d", lineSensor.get_value());
+		pros::lcd::print(2, "L: %d; IMU: %f", lineSensor.get_value(), imuSensor.get_rotation());
 
     //pros::lcd::print(3, "pos: %f",pos);
 

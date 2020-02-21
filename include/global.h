@@ -27,6 +27,7 @@ extern pros::Motor armRight;
 extern pros::ADIPotentiometer potRight;
 extern pros::ADIPotentiometer potLeft;
 extern pros::ADIAnalogIn lineSensor;
+extern pros::Imu imuSensor;
 
 
 

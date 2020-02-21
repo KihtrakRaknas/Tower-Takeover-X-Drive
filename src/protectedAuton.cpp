@@ -112,7 +112,8 @@ void protectedAuton(){
   /*profileController.setTarget("Smol Shift");
   profileController.waitUntilSettled();*/
 
-  turnRightNonAsync(-340 * color, 46, 2);
+  //turnRightNonAsync(-340 * color, 46, 2);
+  turnPID(145 * color);
   forwardDrive();
   profileController.setTarget("Shift");
   profileController.waitUntilSettled();

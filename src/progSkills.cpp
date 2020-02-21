@@ -41,7 +41,7 @@ void preProgSkills(){//
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.8_ft, 0_ft, 0_deg}},//3.8
+    Point{1.6_ft, 0_ft, 0_deg}},//3.8
     "for4Stack" // Profile name
   );
   profileController.generatePath({
@@ -51,7 +51,7 @@ void preProgSkills(){//
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.3_ft, 0_ft, 0_deg}},//3.8
+    Point{1.5_ft, 0_ft, 0_deg}},//3.8
     "backUpFromStack" // Profile name
   );
   profileController.generatePath({
@@ -69,13 +69,13 @@ void preProgSkills(){//
 void progSkills(){
   //flip out
   ramp.set_brake_mode(MOTOR_BRAKE_HOLD);
-  lift(1500, 100);
+  /*lift(1500, 100);
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
   lift(100, 100);
 
-  pros::delay(100);
+  pros::delay(100);*/
 
   intake(650);
 
@@ -104,7 +104,8 @@ void progSkills(){
   profileController.waitUntilSettled();
   delay(100);
   forwardDrive();
-  turnRightNonAsync(-130,20,2);
+  //turnRightNonAsync(-130,20,2);
+  turnPID(-35);
   delay(100);
   intake(200);
   profileController.setTarget("for4Stack");
@@ -126,43 +127,42 @@ void progSkills(){
   delay(500);*/
   //new stack code
   lift(-30, 100);
-  intake(-1200,200);
+  intake(-1400,200);
   delay(300);
   int initialPos = ramp.get_position();
-  ramp.move_relative(1700,150); //100
-  waitUntilTarget(ramp, 1700+initialPos);
+  ramp.move_relative(2450,150); //100
+  waitUntilTarget(ramp, 2450+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(600,20);
+  ramp.move_relative(800,40);
   delay(300);
-  intake(-950,300); //100 spd
-  delay(150); //500
 
   reverseDrive();
   profileController.setTarget("backUpFromStack");
-  delay(1000);
-  ramp.move_relative(-2200,50);
   intake(-200);
+  delay(500);
+  ramp.move_relative(-2200,50);
   profileController.waitUntilSettled();
-
+  intake(0);
 
 
   forwardDrive();
-  turnRightNonAsync(353,20,2); //470 (like 180)
+  //turnRightNonAsync(353,20,2); //470 (like 180)
+  turnPID(122);
+  lift(100, 100);
 
-  lift(400, 100);
-
-  intake(200);
+  intake(100);
 
   profileController.setTarget("for4Tower");
+  pros::delay(50);
+  intake(0);
   profileController.waitUntilSettled();
 
 
 
   reverseDrive();
   profileController.setTarget("backUpFromTower");
-  delay(50);
   intake(0);
-  intake(-400, 200);
+  //intake(-400, 200);
   profileController.waitUntilSettled();
 
   lift(2200, 100);

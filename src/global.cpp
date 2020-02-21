@@ -7,7 +7,7 @@ int BACK_LEFT = 5;
 
 int BACK_RIGHT = 7;
 
-int auton = 5; //5 is small and 6 is Big // -1 is skills
+int auton = -1; //5 is small and 6 is Big // -1 is skills
 int color = 1; //1 is blue and -1 is red
 
 pros::Motor top_left_mtr(1);
@@ -23,7 +23,7 @@ pros::Motor armRight(20);
 pros::ADIPotentiometer potRight(7);
 pros::ADIPotentiometer potLeft(6);
 pros::ADIAnalogIn lineSensor('C');
-//pros::Imu imu_sensor(12);
+pros::Imu imuSensor(12);
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::Controller partner(pros::E_CONTROLLER_PARTNER);

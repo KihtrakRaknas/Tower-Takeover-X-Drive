@@ -23,5 +23,7 @@ void moveDistSide(double dist, double v);
  void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,int bottomRightTarget, double thresh);
  void waitUntilTarget(int topLeftTarget,int topRightTarget,int bottomLeftTarget,int bottomRightTarget);
  void waitUntilTarget(pros::Motor motor, int target);
+ void driveBrakeHold(bool hold);
+ void turnPID(double);
 
 #endif

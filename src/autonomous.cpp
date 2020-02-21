@@ -27,13 +27,15 @@ void moveDistSide(double dist, double v);
  void intake(double d, double v);
  void liftPot(int leftVal, int rightVal);
  void moveDist(double dist, double v);
+ void turnPID(double deg);
+ void driveBrakeHold(bool);
  double tileDistance = 400;
  double turn90 = 190;
 
  using namespace okapi;
 
 void autonomous() {
-
+  driveBrakeHold(true);
   armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
@@ -62,6 +64,9 @@ if(auton==-1){
   unprotectedAuton();
 }else if(auton == 6){
   protectedAuton();
+}
+else if(auton == 7){
+  turnPID(350);
 }
 else if(auton==1){//BlueBig
   moveDist(0.5,5);
@@ -318,7 +323,37 @@ void turnRightNonAsync(double d, double v, double thresh){ // 340 is a perfect r
   turnRight(d,v);
   waitUntilTarget(top_left_mtr.get_position()+d,top_right_mtr.get_position()-d,bottom_left_mtr.get_position()+d,bottom_right_mtr.get_position()-d, thresh);
 }
-
+void turnPID(double deg){
+  //imuSensor.reset();
+  deg += imuSensor.get_rotation();
+  double error = deg - imuSensor.get_rotation();
+  double kP = 0.8;
+  double kD = 0.5;
+  double oldError = error;
+  double prop_term;
+  double derv_term;
+  int iter = 0;
+  while(abs(error) > 0.5){
+    iter++;
+    prop_term = kP * error;
+    derv_term = kD * (error - oldError);
+    oldError = error;
+    double control = prop_term + derv_term;
+    if(abs(control) > 100){
+      control = 100 * (control / abs(control));
+    }
+    else if(abs(control) < 5){
+      control = 5 * (control / abs(control));
+    }
+    top_left_mtr.move_velocity(control);
+    top_right_mtr.move_velocity(-control);
+    bottom_left_mtr.move_velocity(control);
+    bottom_right_mtr.move_velocity(-control);
+    if(iter%100)
+      pros::lcd::print(0, "C: %f", control);
+    error = deg - imuSensor.get_rotation();
+  }
+}
 void liftPot(int leftVal, int rightVal){
   if(leftVal>potLeft.get_value()){
     while(leftVal>potLeft.get_value() || rightVal<potRight.get_value()){
@@ -350,4 +385,17 @@ void liftPot(int leftVal, int rightVal){
   }
   armLeft.move_velocity(0);
   armRight.move_velocity(0);
+}
+void driveBrakeHold(bool hold){
+  if(hold){
+    top_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+    top_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+    bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+    bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  }else{
+    top_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+    top_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+    bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+    bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+  }
 }

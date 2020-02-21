@@ -11,14 +11,14 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
     {6.0_in, 20_in}
 );
 //skillz
- /*
+// /*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     0.35,  // Maximum linear velocity of the Chassis in m/s
     0.35,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-*/
+//*/
 
 //UnprotectedAuton
 /*
@@ -31,14 +31,14 @@ AsyncMotionProfileController profileController = AsyncControllerFactory::motionP
 */
 
 //ProtectedAuton
-///*
+/*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     1.7,  // Maximum linear velocity of the Chassis in m/s
     1,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-//*/
+*/
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;
@@ -68,20 +68,26 @@ void initialize() {
   pros::lcd::register_btn0_cb(on_left_button);
   pros::lcd::register_btn1_cb(on_center_button);
 	pros::lcd::set_text(1, "Starting Initialization");
+  if(auton ==5 || auton ==6)
+    lineSensor.calibrate();
+  imuSensor.reset();
   armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   pros::lcd::print(2, "%d %d",auton, color);
-  lineSensor.calibrate();
 	if(auton == -1)
 		preProgSkills();
 	else if(auton == 5)
 		preUnprotectedAuton();
   else if(auton == 6)
     preProtectedAuton();
-  else if(auton == 7)
-      preUnprotectedAuton();
+  int iter = 0;
+  while (imuSensor.is_calibrating()) {
+      pros::lcd::print(3, "IMU calibrating... %d", iter);
+      iter += 10;
+      pros::delay(10);
+  }
 	pros::lcd::set_text(1, "Finished Initialization");
 	master.rumble(".");
 }

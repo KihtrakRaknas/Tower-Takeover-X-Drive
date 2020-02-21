@@ -47,24 +47,21 @@ void unprotectedAuton(){
   top_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
-  /*lift(1450, 100);
+  lift(1450, 100);
   pros::delay(200);
   intake(-650);
   pros::delay(1200);
   lift(100, 100);
-  pros::delay(125);*/
+  pros::delay(125);
   int OGline = lineSensor.get_value();
   intake(650);
-  top_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
-  top_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
-  bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
-  bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_COAST);
+  pros::delay(30);
   forwardDrive();
   profileController.setTarget("Blue Small First");
-  delay(1500);
-  pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-200);
+  delay(2000);
+  pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
   if(lineSensor.get_value()>OGline-100){
-    pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-200);
+    pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-100);
     printf("Line Sensor: %d", lineSensor.get_value());
     master.rumble("-");
     reverseDrive();
@@ -100,8 +97,8 @@ void unprotectedAuton(){
   initialPos = ramp.get_position();
   ramp.move_relative(700,40);
   delay(300);
-  intake(-1000,350); //100 spd
-  delay(150); //500
+  //intake(-9000,350); //100 spd
+  //delay(150); //500
   reverseDrive();
   profileController.setTarget("Blue Small Third");
   intake(-100);
