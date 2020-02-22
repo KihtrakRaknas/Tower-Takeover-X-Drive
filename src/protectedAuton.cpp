@@ -43,6 +43,16 @@ void preProtectedAuton(){
     Point{0.4_ft, 0_ft, 0_deg}},//3.8
     "Smol Shift" // Profile name
   );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},
+    Point{3.5_ft, 0_ft, 0_deg}},
+    "Cube Stack"
+  );
+  profileController.generatePath({
+    Point{0_ft,0_ft,0_deg},
+    Point{3_ft,0_ft,0_deg}},
+    "Goal Zone"
+   );
 }
 
 void protectedAuton(){
@@ -59,6 +69,21 @@ void protectedAuton(){
   pros::delay(100);
 
   intake(650);
+
+
+/*forwardDrive()
+profileController.setTarget("Cube Stack");
+profileController.waitUntilSettled();
+turnPID(90 * color);
+profileController.setTarget("Next Cube 2");
+profileController.waitUntilSettled();
+intake(0);
+turnPID(160 * color);
+profileController.setTarget("Goal Zone");
+intake(400)
+profileController.waitUntilSettled();
+*/
+
   //pros::delay(50);
   /*if(color == 1){
     leftDrive(); //blue

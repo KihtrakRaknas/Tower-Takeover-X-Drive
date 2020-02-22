@@ -68,7 +68,7 @@ void initialize() {
   pros::lcd::register_btn0_cb(on_left_button);
   pros::lcd::register_btn1_cb(on_center_button);
 	pros::lcd::set_text(1, "Starting Initialization");
-  if(auton ==5 || auton ==6)
+  if(auton ==5)
     lineSensor.calibrate();
   imuSensor.reset();
   armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
