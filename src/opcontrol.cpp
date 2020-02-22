@@ -178,35 +178,6 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
-			auton = 5;
-			color = 1;
-			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
-				deploy = false;
-			initialize();
-      autonomous();
-    }
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
-			auton = 5;
-			color = -1;
-			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
-				deploy = false;
-			initialize();
-      autonomous();
-    }
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
-			auton = 6;
-			color = 1;
-			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
-				deploy = false;
-			initialize();
-      autonomous();
-    }
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)&&master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-			auton = 6;
-			color = -1;
-			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
-				deploy = false;
-			initialize();
       autonomous();
     }
 

@@ -324,7 +324,7 @@ void turnRightNonAsync(double d, double v, double thresh){ // 340 is a perfect r
   turnRight(d,v);
   waitUntilTarget(top_left_mtr.get_position()+d,top_right_mtr.get_position()-d,bottom_left_mtr.get_position()+d,bottom_right_mtr.get_position()-d, thresh);
 }
-void turnPID(double deg){
+void turnPID(double deg, double MAX_SPEED){
   //imuSensor.reset();
   deg += imuSensor.get_rotation();
   double error = deg - imuSensor.get_rotation();
@@ -340,8 +340,8 @@ void turnPID(double deg){
     derv_term = kD * (error - oldError);
     oldError = error;
     double control = prop_term + derv_term;
-    if(abs(control) > 100){
-      control = 100 * (control / abs(control));
+    if(abs(control) > MAX_SPEED){
+      control = MAX_SPEED * (control / abs(control));
     }
     else if(abs(control) < 5){
       control = 5 * (control / abs(control));
@@ -355,6 +355,11 @@ void turnPID(double deg){
     error = deg - imuSensor.get_rotation();
   }
 }
+
+void turnPID(double deg){
+  turnPID(deg,100);
+}
+
 void liftPot(int leftVal, int rightVal){
   if(leftVal>potLeft.get_value()){
     while(leftVal>potLeft.get_value() || rightVal<potRight.get_value()){

@@ -60,7 +60,7 @@ void unprotectedAuton(){
   pros::delay(30);
   forwardDrive();
   profileController.setTarget("Blue Small First");
-  delay(2000);
+  delay(1500);
   pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
   if(lineSensor.get_value()>OGline-100){
     pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-100);
@@ -86,7 +86,8 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
 
   forwardDrive();
-  turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213
+  //turnPID(-125 * color,200);
+  turnRightNonAsync((-340*2+230) * color,46); //40 mmmmmmmmjh213
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
 

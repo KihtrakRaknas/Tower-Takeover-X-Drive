@@ -107,7 +107,7 @@ void progSkills(){
   delay(100);
   forwardDrive();
   //turnRightNonAsync(-130,20,2);
-  turnPID(-35);
+  turnPID(-38); // 35
   delay(100);
   intake(200);
   profileController.setTarget("for4Stack");
@@ -132,10 +132,10 @@ void progSkills(){
   intake(-1400,200);
   delay(300);
   int initialPos = ramp.get_position();
-  ramp.move_relative(2450,150); //100
-  waitUntilTarget(ramp, 2450+initialPos);
+  ramp.move_relative(2250,150); //100
+  waitUntilTarget(ramp, 2250+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(800,40);
+  ramp.move_relative(800,30);
   delay(300);
 
   reverseDrive();
@@ -149,14 +149,12 @@ void progSkills(){
 
   forwardDrive();
   //turnRightNonAsync(353,20,2); //470 (like 180)
-  turnPID(122);
-  lift(100, 100);
+  turnPID(135);//122
+  lift(200, 100);
 
   intake(100);
 
   profileController.setTarget("for4Tower");
-  pros::delay(50);
-  intake(0);
   profileController.waitUntilSettled();
 
 
@@ -180,4 +178,27 @@ void progSkills(){
 
   delay(3000);
   intake(0);
+  reverseDrive();
+  profileController.setTarget("backUpFromTower");
+  profileController.waitUntilSettled();
+  turnPID(360+90);
+  intake(100);
+  profileController.setTarget("InEnd4");
+  profileController.waitUntilSettled();
+
+  reverseDrive();
+  profileController.setTarget("backUpFromTower");
+  intake(0);
+  //intake(-400, 200);
+  profileController.waitUntilSettled();
+
+  lift(2200, 100);
+
+  delay(1000);
+
+  forwardDrive();
+  profileController.setTarget("backUpFromTower");
+  profileController.waitUntilSettled();
+
+  intake(-200);
 }

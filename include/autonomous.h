@@ -25,5 +25,6 @@ void moveDistSide(double dist, double v);
  void waitUntilTarget(pros::Motor motor, int target);
  void driveBrakeHold(bool hold);
  void turnPID(double);
+void turnPID(double, double);
 
 #endif
