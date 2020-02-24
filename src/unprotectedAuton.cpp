@@ -52,16 +52,16 @@ void unprotectedAuton(){
     pros::delay(200);
     intake(-650);
     pros::delay(1200);
-    lift(100, 100);
+    lift(110, 100);
   }
   pros::delay(125);
-  int OGline = lineSensor.get_value();
+  //int OGline = lineSensor.get_value();
   intake(650);
   pros::delay(30);
   forwardDrive();
   profileController.setTarget("Blue Small First");
-  delay(1500);
-  pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
+  /*delay(1500);
+  //pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
   if(lineSensor.get_value()>OGline-100){
     pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-100);
     printf("Line Sensor: %d", lineSensor.get_value());
@@ -77,11 +77,11 @@ void unprotectedAuton(){
       bottom_right_mtr.move_velocity(0);
     }
     delay(13*1000);
-  }
+  }*/
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
-  delay(1500);
+  delay(1300); //1500
   intake(0);
   profileController.waitUntilSettled();
 
