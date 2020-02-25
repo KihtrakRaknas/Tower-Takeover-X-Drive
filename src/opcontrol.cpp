@@ -32,8 +32,13 @@ void opcontrol() {
  int FRONT_RIGHT = 19;
  int BACK_LEFT = 5;
  int BACK_RIGHT = 7;
- int stackLoop=0;
+ int stackLoop = 0;
+ int liftMacro = 0;
  bool deployed = false;
+ bool macroLiftBtnPressed = false;
+ bool headless = false;
+ double gyroVal = 0;
+
 	auto chassis = ChassisControllerFactory::create(
 	    FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT,
 	    AbstractMotor::gearset::green,
@@ -56,8 +61,10 @@ void opcontrol() {
 	pros::delay(1000);
 	*/
 	while (true) {
-
-		double gyroVal = gyro.get_value()/10;
+		if(headless)
+			gyroVal =  -imuSensor.get_heading(); //(360+imuSensor.get_heading())%360;
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+      headless = true;
 
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),master.get_analog(ANALOG_RIGHT_X),(45-gyroVal)*PI/180);
     /*if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
@@ -86,30 +93,61 @@ void opcontrol() {
 		}
     //0.1*abs(armRight.get_position()-pos)
 
-		pros::lcd::print(2, "L: %d; IMU: %f", lineSensor.get_value(), imuSensor.get_rotation());
+		pros::lcd::print(2, "L: %d; IMU: %f; M: %d", lineSensor.get_value(), imuSensor.get_rotation(), liftMacro);
 
     //pros::lcd::print(3, "pos: %f",pos);
 
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      //if(pos<5500)
-        armRight.move_velocity(200);
-				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && !macroLiftBtnPressed){
+      liftMacro++;
+			if(liftMacro>3)
+				liftMacro = 3;
+			macroLiftBtnPressed = true;
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }
-    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      //if(pos>0)
-        armRight.move_velocity(-200);
-				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
-			armRight.move_velocity(30);
+    else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !macroLiftBtnPressed){
+      liftMacro--;
+			if(liftMacro<0)
+				liftMacro = 0;
+			macroLiftBtnPressed = true;
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    }else{
+			if(!master.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+				macroLiftBtnPressed = false;
+		}
+
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+			liftMacro = -1;
+			armRight.move_velocity(200);
 			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-			armRight.move_velocity(-30);
+			liftMacro = -1;
+			armRight.move_velocity(-200);
 			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		}else{
-			armRight.move_velocity(0);
-			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			if(liftMacro == -1){
+				armRight.move_velocity(0);
+				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			}else{
+				int targetDeg = 0;
+				if(liftMacro == 0){
+					targetDeg = -100;
+				}else if(liftMacro == 1){
+					targetDeg = 200;
+				}else if(liftMacro == 2){
+					targetDeg = 1500;
+				}else if(liftMacro == 3){
+					targetDeg = 2100;
+				}
+				armRight.move_absolute(targetDeg, 200);
+				if(abs(armRight.get_position() - targetDeg) < 10){
+					ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+				}else{
+					ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+				}
+			}
 		}
+
 
 
     if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
@@ -131,15 +169,9 @@ void opcontrol() {
 				rollerLeft.move_velocity(-50);
 	      rollerRight.move_velocity(50);
 			}else{
-				rollerLeft.move_velocity(-1000);
-				rollerRight.move_velocity(1000);
+				rollerLeft.move_velocity(-100);
+				rollerRight.move_velocity(100);
 			}
-    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
-      rollerLeft.move_velocity(-80);
-      rollerRight.move_velocity(80);
-    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){
-      rollerLeft.move_velocity(-140);
-      rollerRight.move_velocity(140);
     }else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       rollerLeft.move_velocity(300);
       rollerRight.move_velocity(-300);
