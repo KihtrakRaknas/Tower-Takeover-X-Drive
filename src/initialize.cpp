@@ -11,14 +11,14 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
     {6.0_in, 20_in}
 );
 //skillz
-/*
+///*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     0.35,  // Maximum linear velocity of the Chassis in m/s
     0.35,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-*/
+//*/
 
 //UnprotectedAuton
 /*
@@ -31,28 +31,46 @@ AsyncMotionProfileController profileController = AsyncControllerFactory::motionP
 */
 
 //ProtectedAuton
-///*
+/*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
-    1.7,  // Maximum linear velocity of the Chassis in m/s
+    2.5,  // Maximum linear velocity of the Chassis in m/s // 1.7
     1,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-//*/
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "blue");
-	}
-}
+*/
 
 void on_left_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "red");
-	}
+  if(auton != -5){
+  	pros::lcd::set_text(4, "red");
+    color = -1;
+    auton = -5;
+    pros::lcd::set_text(1, "1st btn - unprot - small; 2nd - prot - big");
+  }else{
+    auton = 5;
+    pros::lcd::set_text(4, "SMOL");
+    pros::lcd::set_text(1, "re-running init");
+    initialize();
+  }
+}
+
+void on_center_button() {
+  if(auton != -5){
+  	pros::lcd::set_text(4, "blue");
+    color = 1;
+    auton = -5;
+    pros::lcd::print(1, "1st btn - unprot - small; 2nd - prot - big");
+  }else{
+    auton = 6;
+    pros::lcd::set_text(4, "BIG");
+    pros::lcd::set_text(1, "re-running init");
+    initialize();
+  }
+}
+
+void on_right_button() {
+	auton = 0;
+  initialize();
 }
 
 /**
@@ -67,6 +85,7 @@ void initialize() {
 	pros::lcd::initialize();
   pros::lcd::register_btn0_cb(on_left_button);
   pros::lcd::register_btn1_cb(on_center_button);
+  pros::lcd::register_btn2_cb(on_right_button);
 	pros::lcd::set_text(1, "Starting Initialization");
   if(auton ==5)
     lineSensor.calibrate();
@@ -75,7 +94,18 @@ void initialize() {
   armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  pros::lcd::print(2, "%d %d",auton, color);
+  std::string autonTxt = "";
+  if(color == 1 && (auton == 5 || auton == 6))
+    autonTxt = "BLUE";
+  else if(color == -1 && (auton == 5 || auton == 6))
+    autonTxt = "RED";
+
+  if(auton == 5)
+    autonTxt += "UNPROTECTED - SMALL";
+  else if(auton == 6)
+    autonTxt += "PROTECTED - BIG BOI";
+
+  pros::lcd::print(0, "%s %d %d",autonTxt, auton, color);
 	if(auton == -1)
 		preProgSkills();
 	else if(auton == 5)
@@ -89,6 +119,7 @@ void initialize() {
       pros::delay(10);
   }
 	pros::lcd::set_text(1, "Finished Initialization");
+  pros::lcd::set_text(1, "1st btn - RED; 2nd - BLUE; 3rd - NONE");
 	master.rumble(".");
 }
 

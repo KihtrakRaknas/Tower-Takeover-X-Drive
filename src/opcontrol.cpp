@@ -18,6 +18,14 @@
  * task, not resume it from where it left off.
  */
 using namespace okapi;
+
+void checkHoldRamp(){
+	if(ramp.get_position()>600)
+		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	else
+		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+}
+
 void opcontrol() {
 	master.rumble("-");
 	//autonomous();
@@ -45,9 +53,6 @@ void opcontrol() {
 	    {6.0_in, 20_in}
 	);
 
-	ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 	driveBrakeHold(false);
 
@@ -65,7 +70,7 @@ void opcontrol() {
 			gyroVal =  -imuSensor.get_heading(); //(360+imuSensor.get_heading())%360;
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
       headless = true;
-
+		driveBrakeHold(false);
 		moveDrive((double)master.get_analog(ANALOG_LEFT_X),master.get_analog(ANALOG_LEFT_Y),master.get_analog(ANALOG_RIGHT_X),(45-gyroVal)*PI/180);
     /*if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       armRight.move_velocity(-200);
@@ -81,9 +86,8 @@ void opcontrol() {
       armLeft.move_velocity(175);
     }*/
 
-		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    armLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    armRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		if(ramp.get_position()<800){
 			rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 			rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -110,6 +114,12 @@ void opcontrol() {
 				liftMacro = 0;
 			macroLiftBtnPressed = true;
 			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    }else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+			if(liftMacro<0){
+				liftMacro = -1;
+				armRight.move_velocity(-20);
+			}
+			ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }else{
 			if(!master.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 				macroLiftBtnPressed = false;
@@ -127,22 +137,23 @@ void opcontrol() {
 		}else{
 			if(liftMacro == -1){
 				armRight.move_velocity(0);
-				ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+				checkHoldRamp();
 			}else{
 				int targetDeg = 0;
 				if(liftMacro == 0){
-					targetDeg = -100;
+					targetDeg = 0;
 				}else if(liftMacro == 1){
 					targetDeg = 200;
 				}else if(liftMacro == 2){
-					targetDeg = 1500;
+					targetDeg = 1620;
 				}else if(liftMacro == 3){
 					targetDeg = 2100;
 				}
-				armRight.move_absolute(targetDeg, 200);
-				if(abs(armRight.get_position() - targetDeg) < 10){
-					ramp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+				if(abs(armRight.get_position() - targetDeg) < 30){
+					armRight.move_velocity(0);
+					checkHoldRamp();
 				}else{
+					armRight.move_absolute(targetDeg, 200);
 					ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 				}
 			}
@@ -184,9 +195,9 @@ void opcontrol() {
     }
 
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-			int MIN_SPEED = 40;
-			int speed = 750+MIN_SPEED-ramp.get_position();
-			speed = pow((speed/200),1)*200;
+			int MIN_SPEED = 30;
+			int speed = 1600+MIN_SPEED-ramp.get_position();
+			speed = pow((speed/200),0.4)*200;
 			if(speed<MIN_SPEED)
 				speed = MIN_SPEED;
 			/*if(ramp.get_position()>750)

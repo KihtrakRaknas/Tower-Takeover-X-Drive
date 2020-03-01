@@ -20,12 +20,12 @@ void preUnprotectedAuton(){
   */
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{4.2_ft, 0_ft, 0_deg}},//3.8
+    Point{4.8_ft, 0_ft, 0_deg}},//4.2
     "Blue Small First" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.6_ft, 0_ft, 0_deg}},//2.3
+    Point{3.2_ft, 0_ft, 0_deg}},//2.3
     "Blue Small First Second" // Profile name
   );
   profileController.generatePath({
@@ -38,6 +38,16 @@ void preUnprotectedAuton(){
     Point{2_ft, 0_ft, 0_deg}},
     "Blue Small Third" // Profile name
   );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{0.5_ft, 0_ft, 0_deg}},
+    "Shift A" // Profile name
+  );
+  profileController.generatePath({
+    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+    Point{0.55_ft, 0_ft, 0_deg}},
+    "Shift B" // Profile name
+  );
 }
 
 void unprotectedAuton(){
@@ -48,51 +58,61 @@ void unprotectedAuton(){
   bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   if(deploy){
+    move(500, 50);
     lift(1450, 100);
     pros::delay(200);
     intake(-650);
-    pros::delay(1200);
+    pros::delay(600);
+    move(-500, 50);
+    pros::delay(600);
     lift(110, 100);
   }
   pros::delay(125);
-  //int OGline = lineSensor.get_value();
+  int OGline = lineSensor.get_value();
   intake(650);
   pros::delay(30);
   forwardDrive();
   profileController.setTarget("Blue Small First");
-  /*delay(1500);
-  //pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
-  if(lineSensor.get_value()>OGline-100){
-    pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-100);
-    printf("Line Sensor: %d", lineSensor.get_value());
-    master.rumble("-");
-    reverseDrive();
-    profileController.setTarget("Blue Small First Second");
-    rollerRight.move_velocity(0);
-    rollerLeft.move_velocity(0);
-    while(true){
-      top_left_mtr.move_velocity(0);
-      top_right_mtr.move_velocity(0);
-      bottom_left_mtr.move_velocity(0);
-      bottom_right_mtr.move_velocity(0);
+  delay(1500);
+  pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
+  int MAX_OFF = 50;
+  if(lineSensor.get_value()!=8&&lineSensor.get_value()>OGline-MAX_OFF){
+    delay(300);
+    if(lineSensor.get_value()>OGline-MAX_OFF){
+      delay(300);
+      if(lineSensor.get_value()>OGline-MAX_OFF){
+        pros::lcd::print(0,"FAILED: %d; + %d", lineSensor.get_value(),OGline-100);
+        printf("Line Sensor: %d", lineSensor.get_value());
+        master.rumble("-");
+        reverseDrive();
+        profileController.setTarget("Blue Small First Second");
+        rollerRight.move_velocity(0);
+        rollerLeft.move_velocity(0);
+        while(true){
+          top_left_mtr.move_velocity(0);
+          top_right_mtr.move_velocity(0);
+          bottom_left_mtr.move_velocity(0);
+          bottom_right_mtr.move_velocity(0);
+        }
+        delay(13*1000);
+      }
     }
-    delay(13*1000);
-  }*/
+  }
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
-  delay(1300); //1500
+  delay(1200); //1500
   intake(0);
   profileController.waitUntilSettled();
 
   forwardDrive();
   //turnPID(-125 * color,200);
-  turnRightNonAsync((-340*2+230) * color,46); //40 mmmmmmmmjh213
+  turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213 //230
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
 
-  lift(-30, 100);
-  intake(-1400,200);
+  lift(-50, 100);
+  intake(-900,100);
   delay(300);
   int initialPos = ramp.get_position();
   ramp.move_relative(2350,150); //100

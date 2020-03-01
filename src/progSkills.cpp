@@ -11,7 +11,7 @@ using namespace okapi;
 void preProgSkills(){//
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{8_ft, 0_ft, 0_deg}},//3.8
+    Point{8.8_ft, 0_ft, 0_deg}},//3.8
     "InFirst8" // Profile name
   );
   profileController.generatePath({
@@ -21,17 +21,17 @@ void preProgSkills(){//
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{0.4_ft, 0_ft, 0_deg}},//3.8
+    Point{0.3_ft, 0_ft, 0_deg}},//3.8
     "strafeTower" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.8_ft, 0_ft, 0_deg}},//3.8
+    Point{1.5_ft, 0_ft, 0_deg}},//3.8
     "InMiddle1" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{4.1_ft, 0_ft, 0_deg}},//3.8
+    Point{4.5_ft, 0_ft, 0_deg}},//3.8
     "InEnd4" // Profile name
   );
   profileController.generatePath({
@@ -74,12 +74,12 @@ void progSkills(){
     pros::delay(200);
     intake(-650);
     pros::delay(1200);
-    lift(100, 100);
+    lift(80, 100);
 
     pros::delay(100);
   }
 
-  intake(650);
+  intake(120);
 
   profileController.setTarget("InFirst4");
   profileController.waitUntilSettled();
@@ -107,7 +107,7 @@ void progSkills(){
   delay(100);
   forwardDrive();
   //turnRightNonAsync(-130,20,2);
-  turnPID(-38); // 35
+  turnPID(-25); // 35
   delay(100);
   intake(200);
   profileController.setTarget("for4Stack");
@@ -128,19 +128,18 @@ void progSkills(){
   intake(-700,100);
   delay(500);*/
   //new stack code
-  lift(-30, 100);
-  intake(-1400,200);
+  lift(-50, 100);
+  intake(-900,100);
   delay(300);
   int initialPos = ramp.get_position();
-  ramp.move_relative(2250,150); //100
-  waitUntilTarget(ramp, 2250+initialPos);
+  ramp.move_relative(2350,150); //100
+  waitUntilTarget(ramp, 2350+initialPos);
   initialPos = ramp.get_position();
-  ramp.move_relative(800,30);
+  ramp.move_relative(700,40);
   delay(300);
-
   reverseDrive();
   profileController.setTarget("backUpFromStack");
-  intake(-200);
+  intake(-100);
   delay(500);
   ramp.move_relative(-2200,50);
   profileController.waitUntilSettled();
@@ -173,7 +172,7 @@ void progSkills(){
   profileController.setTarget("backUpFromTower");
   profileController.waitUntilSettled();
 
-  intake(-200);
+  intake(-100);
 
 
   delay(3000);
@@ -182,7 +181,7 @@ void progSkills(){
   profileController.setTarget("backUpFromTower");
   profileController.waitUntilSettled();
   turnPID(360+90);
-  intake(100);
+  intake(50);
   profileController.setTarget("InEnd4");
   profileController.waitUntilSettled();
 
@@ -200,5 +199,5 @@ void progSkills(){
   profileController.setTarget("backUpFromTower");
   profileController.waitUntilSettled();
 
-  intake(-200);
+  intake(-100);
 }

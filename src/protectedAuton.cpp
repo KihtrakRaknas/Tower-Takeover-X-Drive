@@ -137,19 +137,18 @@ profileController.waitUntilSettled();
   forwardDrive();
   profileController.setTarget("Shift");
   profileController.waitUntilSettled();
-  lift(-60, 100);
-  intake(-1200,200);
-  delay(500);
-  int initialPos = ramp.get_position();
-  ramp.move_relative(1600,150); //100
-  waitUntilTarget(ramp, 1600+initialPos);
-  initialPos = ramp.get_position();
-  ramp.move_relative(600,20);
+  lift(-50, 100);
+  intake(-900,100);
   delay(300);
-  intake(-970,300); //100 spd
-  delay(150); //500
+  int initialPos = ramp.get_position();
+  ramp.move_relative(2350,150); //100
+  waitUntilTarget(ramp, 2350+initialPos);
+  initialPos = ramp.get_position();
+  ramp.move_relative(700,40);
+  delay(300);
   reverseDrive();
   profileController.setTarget("Next Cube 2");
+  intake(-100);
   profileController.waitUntilSettled();
   intake(0);
 

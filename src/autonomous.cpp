@@ -68,8 +68,9 @@ if(auton==-1){
 }
 else if(auton == 7){
   turnPID(350);
-}
-else if(auton==1){//BlueBig
+}else if(auton == 0){
+  turnPID(90);
+}else if(auton==1){//BlueBig
   moveDist(0.5,5);
   //liftPot(240,3090);
   //liftPot(220,3100);
@@ -183,16 +184,16 @@ void delay(double d){
 }
 void move(double d, double v){
     top_left_mtr.move_relative(d,v);
-    top_right_mtr.move_relative(d*-1,v);
-    bottom_left_mtr.move_relative(-d*-1,v);
-    bottom_right_mtr.move_relative(-d,v);
+    top_right_mtr.move_relative(d,v);
+    bottom_left_mtr.move_relative(d,v);
+    bottom_right_mtr.move_relative(d,v);
 }
 void moveDist(double dist, double v){
-    double tickNum = (90.0 / 3.14) * dist;
-    top_right_mtr.move_relative(tickNum*-1, v);
-    bottom_right_mtr.move_relative(-tickNum, v);
+    double tickNum = -(90.0 / 3.14) * dist;
+    top_right_mtr.move_relative(tickNum, v);
+    bottom_right_mtr.move_relative(tickNum, v);
     top_left_mtr.move_relative(tickNum, v);
-    bottom_left_mtr.move_relative(-tickNum*-1, v);
+    bottom_left_mtr.move_relative(tickNum, v);
 }
 void moveDistSide(double dist, double v){ //to right
   double tickNum = (90.0 / 3.14) * dist;
