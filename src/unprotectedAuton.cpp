@@ -20,12 +20,12 @@ void preUnprotectedAuton(){
   */
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{4.8_ft, 0_ft, 0_deg}},//4.2
+    Point{4.4_ft, 0_ft, 0_deg}},//4.2
     "Blue Small First" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{3.2_ft, 0_ft, 0_deg}},//2.3
+    Point{2.8_ft, 0_ft, 0_deg}},//2.3
     "Blue Small First Second" // Profile name
   );
   profileController.generatePath({
@@ -58,22 +58,22 @@ void unprotectedAuton(){
   bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   if(deploy){
-    move(500, 50);
+    //move(500, 50);
     lift(1450, 100);
     pros::delay(200);
-    intake(-650);
-    pros::delay(600);
-    move(-500, 50);
+    intake(-200);
+    //pros::delay(600);
+    //move(-500, 50);
     pros::delay(600);
     lift(110, 100);
   }
   pros::delay(125);
-  int OGline = lineSensor.get_value();
-  intake(650);
+  //int OGline = lineSensor.get_value();
+  intake(150);
   pros::delay(30);
   forwardDrive();
   profileController.setTarget("Blue Small First");
-  delay(1500);
+  /*delay(1500);
   pros::lcd::print(0,"Line Sensor: %d; + %d", lineSensor.get_value(),OGline-100);
   int MAX_OFF = 50;
   if(lineSensor.get_value()!=8&&lineSensor.get_value()>OGline-MAX_OFF){
@@ -97,22 +97,24 @@ void unprotectedAuton(){
         delay(13*1000);
       }
     }
-  }
+  }*/
+  delay(3200);
+  intake(0);
   profileController.waitUntilSettled();
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
-  delay(1200); //1500
-  intake(0);
+  //delay(300); //1500
+  //intake(0);
   profileController.waitUntilSettled();
 
   forwardDrive();
-  //turnPID(-125 * color,200);
-  turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213 //230
+  turnPID(-123 * color,300);
+  //turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213 //230
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
 
   lift(-50, 100);
-  intake(-900,100);
+  intake(-600,70);
   delay(300);
   int initialPos = ramp.get_position();
   ramp.move_relative(2350,150); //100

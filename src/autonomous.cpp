@@ -329,8 +329,8 @@ void turnPID(double deg, double MAX_SPEED){
   //imuSensor.reset();
   deg += imuSensor.get_rotation();
   double error = deg - imuSensor.get_rotation();
-  double kP = 0.8;
-  double kD = 0.5;
+  double kP = 0.8;//0.8
+  double kD = 0.5;//0.5
   double oldError = error;
   double prop_term;
   double derv_term;
@@ -344,8 +344,8 @@ void turnPID(double deg, double MAX_SPEED){
     if(abs(control) > MAX_SPEED){
       control = MAX_SPEED * (control / abs(control));
     }
-    else if(abs(control) < 5){
-      control = 5 * (control / abs(control));
+    else if(abs(control) < 10){
+      control = 10 * (control / abs(control));
     }
     top_left_mtr.move_velocity(control);
     top_right_mtr.move_velocity(-control);
