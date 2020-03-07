@@ -329,7 +329,7 @@ void turnPID(double deg, double MAX_SPEED){
   //imuSensor.reset();
   deg += imuSensor.get_rotation();
   double error = deg - imuSensor.get_rotation();
-  double kP = 0.8;//0.8
+  double kP = 0.7;//0.8
   double kD = 0.5;//0.5
   double oldError = error;
   double prop_term;
@@ -360,7 +360,32 @@ void turnPID(double deg, double MAX_SPEED){
 void turnPID(double deg){
   turnPID(deg,100);
 }
-
+void turnPIDABS(double deg, double MAX_SPEED){
+  double error = deg - imuSensor.get_rotation();
+  double kP = 0.7;//0.8
+  double kD = 0.5;//0.5
+  double oldError = error;
+  double prop_term;
+  double derv_term;
+  int iter = 0;
+  while(abs(error) > 0.5){
+    iter++;
+    prop_term = kP * error;
+    derv_term = kD * (error - oldError);
+    oldError = error;
+    double control = prop_term + derv_term;
+    if(abs(control) > MAX_SPEED){
+      control = MAX_SPEED * (control / abs(control));
+    }
+    else if(abs(control) < 10){
+      control = 10 * (control / abs(control));
+    }
+    top_left_mtr.move_velocity(control);
+    top_right_mtr.move_velocity(-control);
+    bottom_left_mtr.move_velocity(control);
+    bottom_right_mtr.move_velocity(-control);
+  }
+}
 void liftPot(int leftVal, int rightVal){
   if(leftVal>potLeft.get_value()){
     while(leftVal>potLeft.get_value() || rightVal<potRight.get_value()){

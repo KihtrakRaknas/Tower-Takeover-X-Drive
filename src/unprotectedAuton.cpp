@@ -57,17 +57,18 @@ void unprotectedAuton(){
   top_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_left_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  armRight.set_brake_mode(MOTOR_BRAKE_HOLD);
   if(deploy){
-    //move(500, 50);
+    move(500, 50);
     lift(1450, 100);
     pros::delay(200);
     intake(-200);
     //pros::delay(600);
-    //move(-500, 50);
-    pros::delay(600);
-    lift(110, 100);
+    move(-500, 50);
+    pros::delay(300);
+    lift(300, 100);
   }
-  pros::delay(125);
+  pros::delay(200);
   //int OGline = lineSensor.get_value();
   intake(150);
   pros::delay(30);
@@ -98,9 +99,19 @@ void unprotectedAuton(){
       }
     }
   }*/
-  delay(3200);
+  delay(3250);
   intake(0);
   profileController.waitUntilSettled();
+  /*
+  turnPID(45 * color, 300);
+  profileController.setTarget("Shift A");
+  profileController.waitUntilSettled();
+  reverseDrive();
+  profileController.setTarget("Shift A");
+  profileController.waitUntilSettled();
+  forwardDrive();
+  turnPID(-45 * color, 300);
+  */
   reverseDrive();
   profileController.setTarget("Blue Small First Second");
   //delay(300); //1500
@@ -108,7 +119,7 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
 
   forwardDrive();
-  turnPID(-123 * color,300);
+  turnPID(-121 * color,300);
   //turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213 //230
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();

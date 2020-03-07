@@ -26,5 +26,6 @@ void moveDistSide(double dist, double v);
  void driveBrakeHold(bool hold);
  void turnPID(double);
 void turnPID(double, double);
+void turnPIDABS(double deg, double MAX_SPEED);
 
 #endif

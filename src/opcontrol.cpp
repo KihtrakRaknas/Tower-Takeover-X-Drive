@@ -87,7 +87,7 @@ void opcontrol() {
     }*/
 
 		ramp.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    armRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    armRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		if(ramp.get_position()<800){
 			rollerRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 			rollerLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
