@@ -20,12 +20,12 @@ void preUnprotectedAuton(){
   */
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{4.4_ft, 0_ft, 0_deg}},//4.2
+    Point{4.7_ft, 0_ft, 0_deg}},//4.2
     "Blue Small First" // Profile name
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.8_ft, 0_ft, 0_deg}},//2.3
+    Point{3.1_ft, 0_ft, 0_deg}},//2.3
     "Blue Small First Second" // Profile name
   );
   profileController.generatePath({
@@ -59,19 +59,18 @@ void unprotectedAuton(){
   bottom_right_mtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   armRight.set_brake_mode(MOTOR_BRAKE_HOLD);
   if(deploy){
-    move(500, 50);
+    //move(500, 50);
     lift(1450, 100);
     pros::delay(200);
     intake(-200);
     //pros::delay(600);
-    move(-500, 50);
-    pros::delay(300);
-    lift(300, 100);
+    //move(-500, 50);
+    pros::delay(500);
+    lift(250, 100);
   }
-  pros::delay(200);
+  pros::delay(100);
   //int OGline = lineSensor.get_value();
   intake(150);
-  pros::delay(30);
   forwardDrive();
   profileController.setTarget("Blue Small First");
   /*delay(1500);
@@ -119,20 +118,20 @@ void unprotectedAuton(){
   profileController.waitUntilSettled();
 
   forwardDrive();
-  turnPID(-121 * color,300);
+  turnPID(-127 * color,300);
   //turnRightNonAsync((-340*2+250) * color,46); //40 mmmmmmmmjh213 //230
   profileController.setTarget("Blue Small Second");
   profileController.waitUntilSettled();
 
   lift(-50, 100);
-  intake(-600,70);
-  delay(300);
+  intake(-600,140);
+  delay(150);
   int initialPos = ramp.get_position();
   ramp.move_relative(2350,150); //100
   waitUntilTarget(ramp, 2350+initialPos);
   initialPos = ramp.get_position();
   ramp.move_relative(700,40);
-  delay(300);
+  delay(100);
   //intake(-9000,350); //100 spd
   //delay(150); //500
   reverseDrive();

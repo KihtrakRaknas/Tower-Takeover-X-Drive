@@ -145,9 +145,9 @@ void opcontrol() {
 				}else if(liftMacro == 1){
 					targetDeg = 200;
 				}else if(liftMacro == 2){
-					targetDeg = 1620;
+					targetDeg = 1670;
 				}else if(liftMacro == 3){
-					targetDeg = 2100;
+					targetDeg = 2150;
 				}
 				if(abs(armRight.get_position() - targetDeg) < 30){
 					armRight.move_velocity(0);

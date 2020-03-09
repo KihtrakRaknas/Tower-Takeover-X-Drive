@@ -19,30 +19,40 @@ void preProtectedAuton(){
   );
   */
   profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{0.3_ft, 0_ft, 0_deg}},//3.8
-    "Shift" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{0.8_ft, 0_ft, 0_deg}},//2.3
-    "Left Shift" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{1.5_ft, 0_ft, 0_deg}},
-    "Next Cube 1" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{2.3_ft, 0_ft, 0_deg}},
-    "Next Cube 2" // Profile name
-  );
-  profileController.generatePath({
-    Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{0.4_ft, 0_ft, 0_deg}},//3.8
-    "Smol Shift" // Profile name
-  );
+      Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+      Point{1.9_ft, 0_ft, 0_deg}},//3.8
+      "Shift" // Profile name
+    );
+    profileController.generatePath({
+      Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+      Point{1.9_ft, 0_ft, 0_deg}},//2.3
+      "Left Shift" // Profile name
+    );
+    profileController.generatePath({
+      Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+      Point{1.5_ft, 0_ft, 0_deg}},
+      "Next Cube 1" // Profile name
+    );
+    profileController.generatePath({
+      Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+      Point{2.35_ft, 0_ft, 0_deg}},
+      "Next Cube 2" // Profile name
+    );
+    profileController.generatePath({
+      Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+      Point{0.4_ft, 0_ft, 0_deg}},//3.8
+      "Smol Shift" // Profile name
+    );
+    profileController.generatePath({
+      Point{0_ft, 0_ft, 0_deg},
+      Point{4.0_ft, 0_ft, 0_deg}},
+      "Cube Stack"
+    );
+    profileController.generatePath({
+      Point{0_ft,0_ft,0_deg},
+      Point{3_ft,0_ft,0_deg}},
+      "Goal Zone"
+    );
   /*profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},
     Point{3.5_ft, 0_ft, 0_deg}},
@@ -59,10 +69,18 @@ void protectedAuton(){
   //flip out
   ramp.set_brake_mode(MOTOR_BRAKE_HOLD);
   if(deploy){
-    lift(1500, 100);
+    /*lift(1500, 100);
     pros::delay(200);
     intake(-650);
     pros::delay(1200);
+    lift(250, 100);*/
+    move(500, 60);
+    lift(1450, 100);
+    pros::delay(200);
+    intake(-200);
+    //pros::delay(600);
+    move(-500, 60);
+    pros::delay(300);
     lift(250, 100);
   }
 
@@ -71,18 +89,40 @@ void protectedAuton(){
   intake(650);
 
 //5 pt
-/*forwardDrive()
-profileController.setTarget("Cube Stack");
+forwardDrive();
+profileController.setTarget("Left Shift");
+delay(2500);
+intake(0);
 profileController.waitUntilSettled();
-turnPID(90 * color);
+turnPID(85 * color, 200);
+intake(150);
 profileController.setTarget("Next Cube 2");
+delay(2300);
+intake(0);
+profileController.waitUntilSettled();
+//turnPID(30 * color, 200);
+if(color == 1){
+  rightDrive();
+}
+else{
+  leftDrive();
+}
+profileController.setTarget("Shift");
+profileController.waitUntilSettled();
+//lift(-50, 100);
+intake(-600,90);
+delay(150);
+int initialPos = ramp.get_position();
+ramp.move_relative(2350,150); //100
+waitUntilTarget(ramp, 2350+initialPos);
+initialPos = ramp.get_position();
+ramp.move_relative(700,40);
+delay(150);
+reverseDrive();
+profileController.setTarget("Next Cube 2");
+intake(-50);
 profileController.waitUntilSettled();
 intake(0);
-turnPID(160 * color);
-profileController.setTarget("Goal Zone");
-intake(400)
-profileController.waitUntilSettled();
-*/
 
   //pros::delay(50);
   /*if(color == 1){
@@ -116,7 +156,7 @@ profileController.waitUntilSettled();
   profileController.waitUntilSettled();*/
 
   //old auton
-  forwardDrive();
+  /*forwardDrive();
   profileController.setTarget("Shift");
   profileController.waitUntilSettled();
   reverseDrive();
@@ -150,7 +190,7 @@ profileController.waitUntilSettled();
   profileController.setTarget("Next Cube 2");
   intake(-100);
   profileController.waitUntilSettled();
-  intake(0);
+  intake(0);*/
 
 
 

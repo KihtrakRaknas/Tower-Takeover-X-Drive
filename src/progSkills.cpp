@@ -26,7 +26,7 @@ void preProgSkills(){//
   );
   profileController.generatePath({
     Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-    Point{3.1_ft, 0_ft, 0_deg}},//3.8
+    Point{3.3_ft, 0_ft, 0_deg}},//3.8
     "InMiddle1" // Profile name
   );
   profileController.generatePath({
@@ -75,7 +75,7 @@ void progSkills(){
     pros::delay(200);
     intake(-650);
     pros::delay(300);
-    lift(120, 100); //80
+    lift(250, 100); //80
     pros::delay(100);
   }
   intake(200);
@@ -152,7 +152,7 @@ void progSkills(){
 
   forwardDrive();
   //turnRightNonAsync(353,20,2); //470 (like 180)
-  turnPID(90);//122
+  turnPID(110);//122
   lift(200, 100);
 
   intake(100);

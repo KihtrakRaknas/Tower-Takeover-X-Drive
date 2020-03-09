@@ -11,14 +11,14 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(
     {6.0_in, 20_in}
 );
 //skillz
-///*
+/*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
     0.4,  // Maximum linear velocity of the Chassis in m/s
     0.35,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-//*/
+*/
 
 //UnprotectedAuton
 /*
@@ -31,14 +31,14 @@ AsyncMotionProfileController profileController = AsyncControllerFactory::motionP
 */
 
 //ProtectedAuton
-/*
+///*
 AsyncMotionProfileController profileController = AsyncControllerFactory::motionProfile(
-    2.4,  // Maximum linear velocity of the Chassis in m/s // 1.7
+    3.5,  // Maximum linear velocity of the Chassis in m/s // 1.7
     1,  // Maximum linear acceleration of the Chassis in m/s/s
     1, // Maximum linear jerk of the Chassis in m/s/s/s
     chassis // Chassis Controller
 );
-*/
+//*/
 
 void on_left_button() {
   if(auton != -5){
